@@ -13,8 +13,7 @@ public class Ball : MonoBehaviour {
     private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-    
-        
+      
     }
 
     void Update()
@@ -39,12 +38,11 @@ public class Ball : MonoBehaviour {
             else
             {
                 rb2d.velocity = new Vector2(currentXVelocity, initialYSpeed);
-
             }
            
         }
     }
-
+    // Not only does paddle and ball need to be reset, but the motion needs to be reset too
     void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.CompareTag("Lower Bounds"))
