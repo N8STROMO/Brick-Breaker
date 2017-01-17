@@ -12,6 +12,7 @@ public class Paddle : MonoBehaviour {
         rb2d = GetComponent<Rigidbody2D>();
     }
 
+
     void FixedUpdate()
     {
         bool movementRight = Input.GetKey(KeyCode.RightArrow);
