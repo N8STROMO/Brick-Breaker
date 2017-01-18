@@ -10,13 +10,16 @@ public class GameControl : MonoBehaviour
     public Transform bricks;
     public Text Lives;
     public Text loseText;
-    private int lives = 3;
+    private int lives;
+    //This assigns sceneName to null. I want the name of the current scene
+    private string currentScene;
 
-    //private void Start()
-    //{
-    //    Scene scene = SceneManager.GetActiveScene();
-    //    string sceneName = scene.name;
-    //}
+
+    private void Start()
+    {
+        SceneManager.LoadScene("Level One");
+        currentScene = SceneManager.GetActiveScene().name;
+    }
 
     //Method to reset paddle and ball to orginal position and speed
     public void ResetAfterLoseLife()
