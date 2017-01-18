@@ -1,17 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameControl : MonoBehaviour
 {
     //Holding reference to ball and paddle
     public Ball ball;
     public Paddle paddle;
+    public Transform bricks;
     public Text Lives;
     public Text loseText;
     private int lives = 3;
 
+    //private void Start()
+    //{
+    //    Scene scene = SceneManager.GetActiveScene();
+    //    string sceneName = scene.name;
+    //}
 
     //Method to reset paddle and ball to orginal position and speed
     public void ResetAfterLoseLife()
@@ -22,6 +27,27 @@ public class GameControl : MonoBehaviour
 
     }
 
+    public void CheckWinCondition()
+    {
+        int numBricks = bricks.childCount;
+        bool didWin = true;
+
+        
+        for(int i = 0; i < numBricks; i++)
+        {
+           if (bricks.GetChild(i).gameObject.activeSelf)
+            {
+                didWin = false;
+                break;
+            }
+        }
+
+        if (didWin)
+        {
+            YouWin();
+        }
+    }
+
     public void LoseLife()
     {
         lives--;
@@ -29,14 +55,19 @@ public class GameControl : MonoBehaviour
 
         if(lives == 0)
         {
-            YouLose();
+            Youlose();
         }
     }
 
-    void YouLose()
+    void Youlose()
     {
-            ball.rb2d.velocity = new Vector2(0, 0);
-            paddle.rb2d.velocity = new Vector2(0, 0);
-            loseText.gameObject.SetActive(true);
+        ball.rb2d.velocity = new Vector2(0, 0);
+        paddle.rb2d.velocity = new Vector2(0, 0);
+        loseText.gameObject.SetActive(true);
+    }
+
+    void YouWin()
+    {
+        SceneManager.LoadScene("Level Two");
     }
 }
