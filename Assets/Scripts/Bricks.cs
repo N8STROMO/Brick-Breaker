@@ -25,11 +25,14 @@ public class Bricks : MonoBehaviour {
     {
         switch (lives)
         {
+            case 5:
+                gameObject.GetComponent<Renderer>().material.color = Color.red;
+                break;
             case 4:
                 gameObject.GetComponent<Renderer>().material.color = Color.magenta;
                 break;
             case 3:
-                gameObject.GetComponent<Renderer>().material.color = Color.red;
+                gameObject.GetComponent<Renderer>().material.color = Color.yellow;
                 break;
             case 2:
                 gameObject.GetComponent<Renderer>().material.color = Color.blue;
