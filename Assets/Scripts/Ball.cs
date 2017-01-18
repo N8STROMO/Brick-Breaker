@@ -9,7 +9,7 @@ public class Ball : MonoBehaviour {
     public float initialYSpeed;
     public GameControl control;
     public bool gameHasStarted = false;
-    public bool froze = false;
+    public Transform paddle;
 
 
     void Start()
@@ -24,12 +24,12 @@ public class Ball : MonoBehaviour {
         if ((Input.GetKey(KeyCode.UpArrow)) && !gameHasStarted)
         {
             gameHasStarted = true;
-            froze = false;
             rb2d.velocity = new Vector2(initialXSpeed, initialYSpeed);
 
         }
-        if (froze)
+        else if (!gameHasStarted)
         {
+            transform.position = new Vector2(paddle.position.x, transform.position.y);
             rb2d.velocity = new Vector2(0, 0);
         }
     }
@@ -61,7 +61,6 @@ public class Ball : MonoBehaviour {
             control.ResetAfterLoseLife();
             control.LoseLife();
             gameHasStarted = false;
-            froze = true;
         }
     }
 
