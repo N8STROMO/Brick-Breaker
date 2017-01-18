@@ -10,7 +10,7 @@ public class GameControl : MonoBehaviour
     public Transform bricks;
     public Text Lives;
     public Text loseText;
-    private int lives;
+    private int lives = 3;
     //This assigns sceneName to null. I want the name of the current scene
     private string currentScene;
 
@@ -55,7 +55,7 @@ public class GameControl : MonoBehaviour
         lives--;
         Lives.text = lives + "";
 
-        if(lives == 0)
+        if(lives <= 0)
         {
             Youlose();
         }
@@ -69,7 +69,19 @@ public class GameControl : MonoBehaviour
     }
 
     void YouWin()
-    {
-        SceneManager.LoadScene("Level Two");
+    { 
+        switch(currentScene)
+        {
+            case "Level One":
+                SceneManager.LoadScene("Level Two");
+                break;
+            case "Level Two":
+                SceneManager.LoadScene("Level Three");
+                break;
+            default:
+                
+                break;
+
+        }  
     }
 }
