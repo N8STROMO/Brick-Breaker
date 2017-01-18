@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bricks : MonoBehaviour {
 
-    public int lives = 1;
+    public int lives;
 
     //Method to deal with collisions
     private void OnCollisionEnter2D(Collision2D collision)
@@ -14,13 +14,17 @@ public class Bricks : MonoBehaviour {
         {
             switch(lives)
             {
-                case 1:
-                    lives = 10;
-                    gameObject.GetComponent<Renderer>().material.color = Color.red; 
+                case 3 :
+                    gameObject.GetComponent<Renderer>().material.color = Color.red;
+                    lives--;
                     break;
-                case 2:
-                    lives = 5;
+                case 2 :
                     gameObject.GetComponent<Renderer>().material.color = Color.blue;
+                    lives--;
+                    break;
+                case 1 :
+                    gameObject.GetComponent<Renderer>().material.color = Color.white;
+                    lives--;
                     break;
                 default:
                     gameObject.SetActive(false);
