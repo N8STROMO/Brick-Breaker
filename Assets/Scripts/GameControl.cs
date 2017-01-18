@@ -17,7 +17,6 @@ public class GameControl : MonoBehaviour
 
     private void Start()
     {
-        SceneManager.LoadScene("Level One");
         currentScene = SceneManager.GetActiveScene().name;
     }
 
