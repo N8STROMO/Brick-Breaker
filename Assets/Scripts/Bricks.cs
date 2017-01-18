@@ -12,10 +12,20 @@ public class Bricks : MonoBehaviour {
         //If the ball collides with the brick game object
         if (collision.gameObject.CompareTag("Ball"))
         {
-            // take one away from lives
-            // Switch statement on the number of lives you have where case 0: sets active to false
-            //Set the game object active state to false;
-            gameObject.SetActive(false);
+            switch(lives)
+            {
+                case 1:
+                    lives = 10;
+                    gameObject.GetComponent<Renderer>().material.color = Color.red; 
+                    break;
+                case 2:
+                    lives = 5;
+                    gameObject.GetComponent<Renderer>().material.color = Color.blue;
+                    break;
+                default:
+                    gameObject.SetActive(false);
+                    break;
+            }
         }
     }
 }
