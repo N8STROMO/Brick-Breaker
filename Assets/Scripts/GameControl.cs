@@ -14,7 +14,7 @@ public class GameControl : MonoBehaviour
     //This assigns sceneName to null. I want the name of the current scene
     private string currentScene;
 
-
+    //On game started, get the current scene name
     private void Start()
     {
         currentScene = SceneManager.GetActiveScene().name;
@@ -29,27 +29,31 @@ public class GameControl : MonoBehaviour
 
     }
 
+    //Method to deal with winning the game
     public void CheckWinCondition()
     {
         int numBricks = bricks.childCount;
         bool didWin = true;
 
-        
+        //Itterate through the bricks
         for(int i = 0; i < numBricks; i++)
         {
+           //If there are still bricks remaining, you have not won
            if (bricks.GetChild(i).gameObject.activeSelf)
             {
                 didWin = false;
                 break;
             }
         }
-
+        
+        //If all the bricks have been destroyed call method YouWin()
         if (didWin)
         {
             YouWin();
         }
     }
 
+    //Method to deal with loosing lives when the ball leaves the loves bounds
     public void LoseLife()
     {
         lives--;
@@ -61,16 +65,10 @@ public class GameControl : MonoBehaviour
         }
     }
 
-    void Youlose()
-    {
-        ball.gameObject.SetActive (false);
-        paddle.gameObject.SetActive (false);
-        loseText.gameObject.SetActive(true);
-    }
-
+    //Method to deal with winning the game and moving to the next level
     void YouWin()
-    { 
-        switch(currentScene)
+    {
+        switch (currentScene)
         {
             case "Level One":
                 SceneManager.LoadScene("Level Two");
@@ -79,9 +77,19 @@ public class GameControl : MonoBehaviour
                 SceneManager.LoadScene("Level Three");
                 break;
             default:
-                
+
                 break;
 
-        }  
+        }
     }
+
+    //Method to deal with lossing; the ball and paddle disappear and loseText is displayed
+    void Youlose()
+    {
+        ball.gameObject.SetActive (false);
+        paddle.gameObject.SetActive (false);
+        loseText.gameObject.SetActive(true);
+    }
+
+    
 }

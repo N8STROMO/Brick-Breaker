@@ -21,12 +21,14 @@ public class Ball : MonoBehaviour {
     void Update()
     {
         //Sets intial speed of ball if left or right arrow is pressed and game has started
+        //Change gameHasStarted to true
         if ((Input.GetKey(KeyCode.UpArrow)) && !gameHasStarted)
         {
             gameHasStarted = true;
             rb2d.velocity = new Vector2(initialXSpeed, initialYSpeed);
 
         }
+        //If the game has not started make the ball follow the paddle
         else if (!gameHasStarted)
         {
             transform.position = new Vector2(paddle.position.x, transform.position.y);
@@ -55,7 +57,7 @@ public class Ball : MonoBehaviour {
     //Method to deal with collisions
     void OnTriggerEnter2D(Collider2D collision)
     {
-        //If ball collides with lower bounds
+        //If ball collides with lower bounds: lose life, set gameHasStarted to false
         if(collision.gameObject.CompareTag("Lower Bounds"))
         {
             control.ResetAfterLoseLife();
@@ -64,6 +66,7 @@ public class Ball : MonoBehaviour {
         }
     }
 
+    //Method to deal with angular ball and collisions
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Paddle"))
