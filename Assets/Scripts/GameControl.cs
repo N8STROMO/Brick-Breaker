@@ -23,7 +23,7 @@ public class GameControl : MonoBehaviour
     //Method to reset paddle and ball to orginal position and speed
     public void ResetAfterLoseLife()
     {
-        ball.gameObject.transform.position = new Vector3(0, (float)-3.5, 0);
+        ball.gameObject.transform.position = new Vector3(0, (float)-3.3, 0);
         ball.rb2d.velocity = new Vector2(ball.initialXSpeed, ball.initialYSpeed);
         paddle.gameObject.transform.position = new Vector3(0, (float)-3.75, 0);
 
@@ -63,8 +63,8 @@ public class GameControl : MonoBehaviour
 
     void Youlose()
     {
-        ball.rb2d.velocity = new Vector2(0, 0);
-        paddle.rb2d.velocity = new Vector2(0, 0);
+        ball.gameObject.SetActive (false);
+        paddle.gameObject.SetActive (false);
         loseText.gameObject.SetActive(true);
     }
 
