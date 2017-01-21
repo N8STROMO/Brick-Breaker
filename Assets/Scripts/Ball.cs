@@ -9,10 +9,8 @@ public class Ball : MonoBehaviour {
     public bool gameHasStarted = false;
     public Transform paddle;
     public PowerUps powerUp;
-    
     public Vector2 ballMaxSpeed = new Vector2(7, 7);
     public Vector2 ballInitialSpeed = new Vector2(4, 4);
-
     private float velocityMultiplier;
 
     void Start()
@@ -24,7 +22,6 @@ public class Ball : MonoBehaviour {
         velocityMultiplier = x;
         rb2d.velocity = rb2d.velocity * x;
     }
-
 
     void Update()
     {
@@ -43,8 +40,6 @@ public class Ball : MonoBehaviour {
             transform.position = new Vector2(paddle.position.x, transform.position.y);
             rb2d.velocity = new Vector2(0, 0);
         }
-
-
     }
 
     //Method to deal with unexpected glitch where ball continually moves from left to right barriers
@@ -95,5 +90,5 @@ public class Ball : MonoBehaviour {
         }
 
 
-        }
     }
+}

@@ -3,8 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class Bricks : MonoBehaviour {
 
-    public int lives;
     public GameControl control;
+    public int lives;
+    
 
     private void Awake()
     {

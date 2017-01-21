@@ -31,9 +31,7 @@ public class PowerUps : MonoBehaviour
                 //change the color of the ball to blue
                 ball.gameObject.GetComponent<Renderer>().material.color = Color.blue;
                 currentActivePowerup = PowerUpTypes.SLOW;
-            }
-            
-            
+            }  
         }
     }
 
@@ -53,10 +51,8 @@ public class PowerUps : MonoBehaviour
                 paddleCollisions++;
             }
            
-            EndPowerUp();
-            
+            EndPowerUp();   
         }
-
     }
 
     private void CollectPowerUp()
@@ -71,11 +67,7 @@ public class PowerUps : MonoBehaviour
                     break;
             }
             powerUpCollected = true;
-            
-
-
         }
-        
     }
 
     private void EndPowerUp()
@@ -87,7 +79,6 @@ public class PowerUps : MonoBehaviour
             ball.SetVelocityMultiplier(1);
             ball.gameObject.GetComponent<Renderer>().material.color = Color.white;
             paddleCollisions = 0;
-            
         }
     }
 
