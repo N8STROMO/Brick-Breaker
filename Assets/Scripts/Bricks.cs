@@ -12,7 +12,7 @@ public class Bricks : MonoBehaviour {
     }
 
     //Method to deal with collisions, ball with bricks
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
         //If the ball collides with the brick game object
         if (collision.gameObject.CompareTag("Ball"))

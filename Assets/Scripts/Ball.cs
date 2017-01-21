@@ -5,14 +5,13 @@ using UnityEngine;
 public class Ball : MonoBehaviour {
 
     public Rigidbody2D rb2d;
-    public float initialXSpeed;
-    public float initialYSpeed;
     public GameControl control;
     public bool gameHasStarted = false;
     public Transform paddle;
-    //Create Randome Number
-    private float powerupchangePercentage;
-    public float powerupCheckInterval;
+    
+    public Vector2 ballMaxSpeed = new Vector2(7, 7);
+    public Vector2 ballInitialSpeed = new Vector2(4, 4);
+    public Vector2 ballCurrentSpeed = new Vector2();
 
     void Start()
     {
@@ -27,7 +26,7 @@ public class Ball : MonoBehaviour {
         if ((Input.GetKey(KeyCode.UpArrow)) && !gameHasStarted)
         {
             gameHasStarted = true;
-            rb2d.velocity = new Vector2(initialXSpeed, initialYSpeed);
+            rb2d.velocity = ballInitialSpeed;
 
         }
 
@@ -38,24 +37,26 @@ public class Ball : MonoBehaviour {
             rb2d.velocity = new Vector2(0, 0);
         }
 
-        //TODO: Every powercheckInterval generate a random number if that number is <= the chancepercentage, then keep track that you are now a powerup
+
     }
 
     //Method to deal with unexpected glitch where ball continually moves from left to right barriers
     void FixedUpdate()
     {
         float currentXVelocity = rb2d.velocity.x;
-        if (Mathf.Abs(rb2d.velocity.y) < initialYSpeed && gameHasStarted)
+        if (Mathf.Abs(rb2d.velocity.y) < ballCurrentSpeed.y && gameHasStarted)
         {
             if (rb2d.velocity.y <= 0)
             {
-                rb2d.velocity = new Vector2(currentXVelocity, -initialYSpeed);
+                rb2d.velocity = new Vector2(currentXVelocity, -ballCurrentSpeed.y);
             }
             else
             {
-                rb2d.velocity = new Vector2(currentXVelocity, initialYSpeed);
+                rb2d.velocity = new Vector2(currentXVelocity, ballCurrentSpeed.y);
             }  
         }
+
+        ballCurrentSpeed = rb2d.velocity;
     }
 
     //Method to deal with collisions
@@ -86,7 +87,16 @@ public class Ball : MonoBehaviour {
             //Set the new velocity
             rb2d.velocity = new Vector2(newVelocity, oldVelocity.y);
 
-            // TODO: IF ball is powerup apply the powerup to the paddle
+            //Need to increase the speed of the ball back to normal after slow powerup is collected
+            //do
+            //{
+            //    if (collision.gameObject.CompareTag("Paddle"))
+            //    {
+            //        ballCurrentSpeed += new Vector2((float).25, (float).25);
+            //    }
+            //} while (ballCurrentSpeed != ballMaxSpeed);
+
+        
         }
     }
 }
