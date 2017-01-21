@@ -12,26 +12,43 @@ public class PowerUps : MonoBehaviour
     public bool powerUpActive;
     private bool powerUpCollected;
     public int paddleCollisions;
-    private PowerUpTypes currentActivePowerup;
+    private PowerUpTypes currentActivePowerUp;
 
     public enum PowerUpTypes {
         SLOW,
-        INCREASE_PADDLE
+        INCREASE_PADDLE,
+        ADD_LIFE
     }
     
     public void ChanceSlowPowerUp()
     {
         float randomNumber = Random.Range(0, 100);
 
-        //If that random number is greater than 0 or less than 25, assign slow power up
+        
         if ((randomNumber > 0 && randomNumber < 30 && !powerUpCollected))
         {
             powerUpActive = true;
-            if (randomNumber > 0 && randomNumber < 10) {
+            //If that random number is greater than 0 or less than 10, assign slow power up
+            if (randomNumber > 0 && randomNumber < 10)
+            {
                 //change the color of the ball to blue
                 ball.gameObject.GetComponent<Renderer>().material.color = Color.blue;
-                currentActivePowerup = PowerUpTypes.SLOW;
-            }  
+                //Set currentActivePowerUp
+                currentActivePowerUp = PowerUpTypes.SLOW;
+            }
+
+            if (randomNumber > 10 && randomNumber < 20)
+            {
+                //change the color of the ball to yellow
+                ball.gameObject.GetComponent<Renderer>().material.color = Color.yellow;
+                currentActivePowerUp = PowerUpTypes.INCREASE_PADDLE;
+            }
+            
+            if (randomNumber > 20 && randomNumber <30)
+            {
+                ball.gameObject.GetComponent<Renderer>().material.color = Color.red;
+                currentActivePowerUp = PowerUpTypes.ADD_LIFE;
+            }
         }
     }
 
@@ -59,12 +76,15 @@ public class PowerUps : MonoBehaviour
     {
         if (powerUpActive && !powerUpCollected) {
 
-            switch (currentActivePowerup) {
+            switch (currentActivePowerUp) {
                 case PowerUpTypes.SLOW:
                     ball.SetVelocityMultiplier(.5f);
                     break;
                 case PowerUpTypes.INCREASE_PADDLE:
                     break;
+                case PowerUpTypes.ADD_LIFE:
+                    break;
+
             }
             powerUpCollected = true;
         }

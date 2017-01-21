@@ -15,7 +15,7 @@ public class Bricks : MonoBehaviour {
     //Method to deal with collisions, ball with bricks
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        //If the ball collides with the brick game object
+        //If the ball collides with the brick game object; Brick looses one life; check to see if you have won.s
         if (collision.gameObject.CompareTag("Ball"))
         {
             lives--;
