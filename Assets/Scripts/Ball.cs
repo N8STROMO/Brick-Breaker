@@ -8,6 +8,7 @@ public class Ball : MonoBehaviour {
     public GameControl control;
     public bool gameHasStarted = false;
     public Transform paddle;
+    public PowerUps powerUp;
     
     public Vector2 ballMaxSpeed = new Vector2(7, 7);
     public Vector2 ballInitialSpeed = new Vector2(4, 4);
@@ -86,17 +87,22 @@ public class Ball : MonoBehaviour {
             float newVelocity = fractionFromCenter * oldVelocity.y;
             //Set the new velocity
             rb2d.velocity = new Vector2(newVelocity, oldVelocity.y);
+        }
 
-            //Need to increase the speed of the ball back to normal after slow powerup is collected
-            //do
-            //{
-            //    if (collision.gameObject.CompareTag("Paddle"))
-            //    {
-            //        ballCurrentSpeed += new Vector2((float).25, (float).25);
-            //    }
-            //} while (ballCurrentSpeed != ballMaxSpeed);
+        //Need to increase the speed of the ball back to normal after slow powerup is collected
+            do
+        {
+            if (collision.gameObject.CompareTag("Paddle"))
+            {
+                ballCurrentSpeed += new Vector2((float).25, (float).25);
+            }
+        } while (ballCurrentSpeed != ballMaxSpeed);
 
-        
+        if (collision.gameObject.CompareTag("Brick"))
+            {
+                powerUp.SlowPowerUp();
+            }
+
+
         }
     }
-}
