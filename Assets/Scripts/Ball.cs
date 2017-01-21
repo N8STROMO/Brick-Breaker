@@ -10,7 +10,9 @@ public class Ball : MonoBehaviour {
     public GameControl control;
     public bool gameHasStarted = false;
     public Transform paddle;
-
+    //Create Randome Number
+    private float powerupchangePercentage;
+    public float powerupCheckInterval;
 
     void Start()
     {
@@ -35,6 +37,8 @@ public class Ball : MonoBehaviour {
             transform.position = new Vector2(paddle.position.x, transform.position.y);
             rb2d.velocity = new Vector2(0, 0);
         }
+
+        //TODO: Every powercheckInterval generate a random number if that number is <= the chancepercentage, then keep track that you are now a powerup
     }
 
     //Method to deal with unexpected glitch where ball continually moves from left to right barriers
@@ -72,7 +76,8 @@ public class Ball : MonoBehaviour {
         if (collision.gameObject.CompareTag("Paddle"))
         {
             //Figure out how fare right or left the ball hit the paddle
-            float offsetFromCenter = rb2d.transform.position.x - collision.transform.position.x;float collisionLength = collision.gameObject.GetComponent<Collider2D>().bounds.size.x;
+            float offsetFromCenter = rb2d.transform.position.x - collision.transform.position.x;
+            float collisionLength = collision.gameObject.GetComponent<Collider2D>().bounds.size.x;
             float fractionFromCenter = offsetFromCenter / (collisionLength / 2);
             //Get the fraction from -1 (left) to 1 (top) of where the ball hit the paddle
             Vector2 oldVelocity = rb2d.velocity;
@@ -80,6 +85,8 @@ public class Ball : MonoBehaviour {
             float newVelocity = fractionFromCenter * oldVelocity.y;
             //Set the new velocity
             rb2d.velocity = new Vector2(newVelocity, oldVelocity.y);
+
+            // TODO: IF ball is powerup apply the powerup to the paddle
         }
     }
 }
