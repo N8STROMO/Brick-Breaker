@@ -28,6 +28,7 @@ public class Ball : MonoBehaviour {
             rb2d.velocity = new Vector2(initialXSpeed, initialYSpeed);
 
         }
+
         //If the game has not started make the ball follow the paddle
         else if (!gameHasStarted)
         {
@@ -49,8 +50,7 @@ public class Ball : MonoBehaviour {
             else
             {
                 rb2d.velocity = new Vector2(currentXVelocity, initialYSpeed);
-            }
-           
+            }  
         }
     }
 

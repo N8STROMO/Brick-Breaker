@@ -10,6 +10,7 @@ public class Bricks : MonoBehaviour {
     {
         SwitchColor();
     }
+
     //Method to deal with collisions, ball with bricks
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -21,6 +22,8 @@ public class Bricks : MonoBehaviour {
             control.CheckWinCondition();
         }
     }
+
+    //Method to control the brick color based on lives
     private void SwitchColor()
     {
         switch (lives)

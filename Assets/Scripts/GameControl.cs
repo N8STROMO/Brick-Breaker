@@ -79,7 +79,6 @@ public class GameControl : MonoBehaviour
             default:
 
                 break;
-
         }
     }
 
