@@ -12,11 +12,17 @@ public class Ball : MonoBehaviour {
     
     public Vector2 ballMaxSpeed = new Vector2(7, 7);
     public Vector2 ballInitialSpeed = new Vector2(4, 4);
-    public Vector2 ballCurrentSpeed = new Vector2();
+
+    private float velocityMultiplier;
 
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+    }
+
+    public void SetVelocityMultiplier(float x) {
+        velocityMultiplier = x;
+        rb2d.velocity = rb2d.velocity * x;
     }
 
 
@@ -45,19 +51,18 @@ public class Ball : MonoBehaviour {
     void FixedUpdate()
     {
         float currentXVelocity = rb2d.velocity.x;
-        if (Mathf.Abs(rb2d.velocity.y) < ballCurrentSpeed.y && gameHasStarted)
+        float maxYSpeed = ballMaxSpeed.y * velocityMultiplier;
+        if (Mathf.Abs(rb2d.velocity.y) < maxYSpeed && gameHasStarted)
         {
             if (rb2d.velocity.y <= 0)
             {
-                rb2d.velocity = new Vector2(currentXVelocity, -ballCurrentSpeed.y);
+                rb2d.velocity = new Vector2(currentXVelocity, -maxYSpeed);
             }
             else
             {
-                rb2d.velocity = new Vector2(currentXVelocity, ballCurrentSpeed.y);
+                rb2d.velocity = new Vector2(currentXVelocity, maxYSpeed);
             }  
         }
-
-        ballCurrentSpeed = rb2d.velocity;
     }
 
     //Method to deal with collisions or triggering of the lower bounds
@@ -88,20 +93,6 @@ public class Ball : MonoBehaviour {
             //Set the new velocity
             rb2d.velocity = new Vector2(newVelocity, oldVelocity.y);
         }
-
-        //Need to increase the speed of the ball back to normal after slow powerup is collected
-            do
-        {
-            if (collision.gameObject.CompareTag("Paddle"))
-            {
-                ballCurrentSpeed += new Vector2((float).25, (float).25);
-            }
-        } while (ballCurrentSpeed != ballMaxSpeed);
-
-        if (collision.gameObject.CompareTag("Brick"))
-            {
-                powerUp.SlowPowerUp();
-            }
 
 
         }

@@ -23,7 +23,7 @@ public class GameControl : MonoBehaviour
     public void ResetAfterLoseLife()
     {
         ball.gameObject.transform.position = new Vector3(0, (float)-3.3, 0);
-        ball.rb2d.velocity = new Vector2(ball.ballCurrentSpeed.x, ball.ballCurrentSpeed.y);
+        ball.rb2d.velocity = new Vector2(0, 0);
         paddle.gameObject.transform.position = new Vector3(0, (float)-3.75, 0);
 
     }
