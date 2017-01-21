@@ -11,7 +11,6 @@ public class GameControl : MonoBehaviour
     public Text Lives;
     public Text loseText;
     private static int lives = 3;
-    //This assigns sceneName to null. I want the name of the current scene
     private string currentScene;
 
     //On game started, get the current scene name

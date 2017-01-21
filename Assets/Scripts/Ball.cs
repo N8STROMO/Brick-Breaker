@@ -59,7 +59,7 @@ public class Ball : MonoBehaviour {
         ballCurrentSpeed = rb2d.velocity;
     }
 
-    //Method to deal with collisions
+    //Method to deal with collisions or triggering of the lower bounds
     void OnTriggerEnter2D(Collider2D collision)
     {
         //If ball collides with lower bounds: lose life, set gameHasStarted to false
@@ -71,7 +71,7 @@ public class Ball : MonoBehaviour {
         }
     }
 
-    //Method to deal with angular ball and collisions
+    //Deaks with angular ball velocity and collisions; slow power up
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Paddle"))
