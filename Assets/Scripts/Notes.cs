@@ -4,6 +4,6 @@
  * Powerups: Lives Increase; paddle length; ball speed > Fixed
  * Only have one power up at a time > Fixed
  * Add Directions
- * Remove all bricks when game ends.
- * Implement angular velocity for start of game when ball leaves paddle.
+ * Remove all bricks when game ends
+ * Implement angular velocity for start of game when ball leaves paddle
  * ************************************************************************/
