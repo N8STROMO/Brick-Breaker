@@ -22,9 +22,9 @@ public class PowerUps : MonoBehaviour
     
     public void CurrentPowerUps()
     {
-        float randomNumber = Random.Range(0, 300);
+        float randomNumber = Random.Range(0, 30);
         
-        if ((randomNumber > 0 && randomNumber < 30 && !powerUpCollected))
+        if ((randomNumber > 0 && randomNumber < 30 && !powerUpCollected && !powerUpActive))
         {
             powerUpActive = true;
             //If that random number is greater than 0 or less than 10, assign slow power up
@@ -37,7 +37,7 @@ public class PowerUps : MonoBehaviour
             }
 
             //If the random number is greater than 10 and less than 20, assign the increase paddle size power up
-            if (randomNumber > 10 && randomNumber < 20)
+            else if (randomNumber > 10 && randomNumber < 20)
             {
                 //change the color of the ball to yellow
                 ball.gameObject.GetComponent<Renderer>().material.color = Color.yellow;
@@ -45,7 +45,7 @@ public class PowerUps : MonoBehaviour
             }
             
             //If the random number is greater than 20 and less than 30, assign the add life power up
-            if (randomNumber > 20 && randomNumber <30)
+            else if (randomNumber > 20 && randomNumber <30)
             {
                 ball.gameObject.GetComponent<Renderer>().material.color = Color.red;
                 currentActivePowerUp = PowerUpTypes.ADD_LIFE;
@@ -107,30 +107,22 @@ public class PowerUps : MonoBehaviour
         {
             powerUpActive = false;
             powerUpCollected = false;
-        
+            //Set ball to white to symbolize no power up
+            ball.gameObject.GetComponent<Renderer>().material.color = Color.white;
+            //reset paddle collisions
+             paddleCollisions = 0;
             switch (currentActivePowerUp)
             {
                 //If the power up was slow, normalize the speed and set the paddleCollisions to 0
                 case PowerUpTypes.SLOW:
                     ball.SetVelocityMultiplier(1);
-                    //Set ball to white to symbolize no power up
-                    ball.gameObject.GetComponent<Renderer>().material.color = Color.white;
-                    //Reset paddle collisions
-                    paddleCollisions = 0;
                     break;
                 //If the power us was increase paddle, return the paddle to the original size
                 case PowerUpTypes.INCREASE_PADDLE:
                     paddle.transform.localScale = new Vector2(2.5f, .25f);
-                    //Set ball to white to symbolize no power up
-                    ball.gameObject.GetComponent<Renderer>().material.color = Color.white;
-                    //reset paddle collisions
-                    paddleCollisions = 0;
                     break;
                 case PowerUpTypes.ADD_LIFE:
-                    //Set ball to white to symbolize no power up
-                    ball.gameObject.GetComponent<Renderer>().material.color = Color.white;
-                    //reset paddle collisions
-                    paddleCollisions = 0;
+                    
                     break;
             }
         }

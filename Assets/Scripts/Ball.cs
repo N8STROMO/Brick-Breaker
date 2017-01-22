@@ -11,7 +11,7 @@ public class Ball : MonoBehaviour {
     public PowerUps powerUp;
     public Vector2 ballMaxSpeed = new Vector2(7, 7);
     public Vector2 ballInitialSpeed = new Vector2(4, 4);
-    private float velocityMultiplier;
+    public float velocityMultiplier;
 
     void Start()
     {

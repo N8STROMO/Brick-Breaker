@@ -92,6 +92,7 @@ public class GameControl : MonoBehaviour
     public void AddLives()
     {
         lives++;
+        Lives.text = lives + "";
     }
 
     
