@@ -86,7 +86,7 @@ public class PowerUps : MonoBehaviour
             switch (currentActivePowerUp) {
                 //If the power up is slow reduce velocity multiplyer by half
                 case PowerUpTypes.SLOW:
-                    ball.SetVelocityMultiplier(.5f);
+                    ball.SetVelocityMultiplier(.6f);
                     break;
                 //If the power up is increase paddle increase the length of the paddle
                 case PowerUpTypes.INCREASE_PADDLE:
