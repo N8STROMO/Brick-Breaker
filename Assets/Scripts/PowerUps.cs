@@ -24,7 +24,7 @@ public class PowerUps : MonoBehaviour
     {
         float randomNumber = Random.Range(0, 120);
         
-        if ((randomNumber > 0 && randomNumber < 30 && !powerUpCollected && !powerUpActive))
+        if ((randomNumber > 0 && randomNumber < 120 && !powerUpCollected && !powerUpActive))
         {
             powerUpActive = true;
             //If that random number is greater than 0 or less than 10, assign slow power up
