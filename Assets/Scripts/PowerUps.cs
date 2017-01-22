@@ -22,13 +22,13 @@ public class PowerUps : MonoBehaviour
     
     public void CurrentPowerUps()
     {
-        float randomNumber = Random.Range(0, 30);
+        float randomNumber = Random.Range(0, 120);
         
         if ((randomNumber > 0 && randomNumber < 30 && !powerUpCollected && !powerUpActive))
         {
             powerUpActive = true;
             //If that random number is greater than 0 or less than 10, assign slow power up
-            if (randomNumber > 0 && randomNumber < 10)
+            if (randomNumber > 0 && randomNumber < 30)
             {
                 //change the color of the ball to blue
                 ball.gameObject.GetComponent<Renderer>().material.color = Color.blue;
@@ -37,7 +37,7 @@ public class PowerUps : MonoBehaviour
             }
 
             //If the random number is greater than 10 and less than 20, assign the increase paddle size power up
-            else if (randomNumber > 10 && randomNumber < 20)
+            else if (randomNumber > 30 && randomNumber < 60)
             {
                 //change the color of the ball to yellow
                 ball.gameObject.GetComponent<Renderer>().material.color = Color.yellow;
@@ -45,7 +45,7 @@ public class PowerUps : MonoBehaviour
             }
             
             //If the random number is greater than 20 and less than 30, assign the add life power up
-            else if (randomNumber > 20 && randomNumber <30)
+            else if (randomNumber > 60 && randomNumber <90)
             {
                 ball.gameObject.GetComponent<Renderer>().material.color = Color.red;
                 currentActivePowerUp = PowerUpTypes.ADD_LIFE;
@@ -90,7 +90,7 @@ public class PowerUps : MonoBehaviour
                     break;
                 //If the power up is increase paddle increase the length of the paddle
                 case PowerUpTypes.INCREASE_PADDLE:
-                    paddle.transform.localScale = new Vector2(3.5f, .25f);
+                    paddle.transform.localScale = new Vector2(4f, .25f);
                     break;
                 //If the pwoer up is add lives add an additional life to your current lives
                 case PowerUpTypes.ADD_LIFE:
