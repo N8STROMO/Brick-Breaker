@@ -10,7 +10,7 @@ public class GameControl : MonoBehaviour
     public Transform bricks;
     public Text Lives;
     public Text loseText;
-    private static int lives = 3;
+    public static int lives = 3;
     private string currentScene;
 
     //On game started, get the current scene name
@@ -87,6 +87,11 @@ public class GameControl : MonoBehaviour
         ball.gameObject.SetActive (false);
         paddle.gameObject.SetActive (false);
         loseText.gameObject.SetActive(true);
+    }
+
+    public void AddLives()
+    {
+        lives++;
     }
 
     
