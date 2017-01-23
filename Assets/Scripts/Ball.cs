@@ -33,6 +33,7 @@ public class Ball : MonoBehaviour {
 
     /// <summary>
     /// Called on every frame
+    /// ToDo set the initial velocity as a component of the trajectory.
     /// </summary>
     void Update()
     {
