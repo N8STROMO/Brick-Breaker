@@ -7,4 +7,5 @@
  * Remove all bricks when game ends > Fixed
  * Implement angular velocity for start of game when ball leaves paddle
  * Clamp the rotation of the trajectory sprite
+ * Glitch where trajectory sprite doesn't always follow the paddle and ball before start
  * ************************************************************************/
