@@ -10,7 +10,7 @@ public class PowerUps : MonoBehaviour
     public GameControl control;
     public bool powerUpActive;
     public bool powerUpCollected;
-    private int paddleCollisions;
+    public int paddleCollisions;
     private PowerUpTypes currentActivePowerUp;
 
     //Enumerate the types of power ups
@@ -25,9 +25,9 @@ public class PowerUps : MonoBehaviour
     /// </summary>
     public void CurrentPowerUps()
     {
-        float randomNumber = Random.Range(0, 120);
+        float randomNumber = Random.Range(0, 240);
         
-        if ((randomNumber > 0 && randomNumber < 120 && !powerUpCollected && !powerUpActive))
+        if ((randomNumber > 0 && randomNumber < 240 && !powerUpCollected && !powerUpActive))
         {
             powerUpActive = true;
             //If that random number is greater than 0 or less than 10, assign slow power up
