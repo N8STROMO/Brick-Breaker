@@ -6,6 +6,8 @@ public class Trajectory : MonoBehaviour
 {
     public Rigidbody2D rb2d;
     public Ball ball;
+    public Paddle paddle;
+    public float rotation;
 
     /// <summary>
     /// Call on first frame
@@ -17,52 +19,25 @@ public class Trajectory : MonoBehaviour
 
     /// <summary>
     /// Deals with the changing the rotation of the trajectory
-    /// ToDo figure out how to make the change in rotation of trajectory reflect to the velocity of the ball
     /// </summary>
-    void FixedUpdate()
+    public void FixedUpdate()
     {
         bool movementRight = Input.GetKey(KeyCode.D);
         bool movementLeft = Input.GetKey(KeyCode.A);
-
+        rotation = gameObject.transform.rotation.z;
+      
         //If movement right set set new angle of trajectory to the right
         if (movementRight)
         {
-            rb2d.transform.eulerAngles = new Vector3(0, 0, -5);
-            //ToDo figure out the angle of the tranjectory 
-
-            //Set the veolicty of the ball based on the current angle of trajectory if the game has started
-            if (ball.gameHasStarted == true)
-            {
-
-            }
+            rb2d.gameObject.transform.Rotate(new Vector3(0,0,-1) , Space.World);
+            
         }
 
         //If movement left set set new angle of trajectory to the left
         else if (movementLeft)
         {
-            rb2d.transform.eulerAngles = new Vector3(0, 0, 5);
-            //ToDo figure out the angle of the tranjectory 
-
-            //Set the veolicty of the ball based on the current angle of trajectory if the game has started 
-            if (ball.gameHasStarted == true)
-            {
-
-            }
+            rb2d.gameObject.transform.Rotate(new Vector3(0, 0, 1), Space.World);
         }
-
-        //Default condition needed in nase neither key is being pressed
-        else
-        {
-            rb2d.transform.eulerAngles = new Vector3(0, 0, 0);
-            //ToDo figure out the angle of the tranjectory 
-
-            //Set the veolicty of the ball based on the current angle of trajectory if the game has started 
-            if (ball.gameHasStarted == true)
-            {
-
-            }
-        }
-
 
     }
 }

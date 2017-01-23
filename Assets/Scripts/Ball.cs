@@ -8,6 +8,7 @@ public class Ball : MonoBehaviour {
     public GameControl control;
     public Transform paddle;
     public PowerUps powerUp;
+    public Trajectory trajectory;
     public bool gameHasStarted = false;
     public Vector2 ballMaxSpeed = new Vector2();
     public Vector2 ballInitialSpeed = new Vector2();
