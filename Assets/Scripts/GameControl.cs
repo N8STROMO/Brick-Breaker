@@ -10,13 +10,15 @@ public class GameControl : MonoBehaviour
     public Transform bricks;
     public Text Lives;
     public Text loseText;
-    public static int lives = 3;
+    public static int lives =3;
+    public float camHeight;
+    public float camWidth;
     private string currentScene;
 
     //On game started, get the current scene name
     private void Start()
     {
-        currentScene = SceneManager.GetActiveScene().name;
+        currentScene = SceneManager.GetActiveScene().name; 
     }
 
     //Method to reset paddle and ball to orginal position and speed

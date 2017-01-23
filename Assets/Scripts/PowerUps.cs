@@ -52,7 +52,7 @@ public class PowerUps : MonoBehaviour
             }
         }
     }
-
+ 
     public void OnCollisionEnter2D(Collision2D collision)
     {
         //If the ball collides with a brick invoke CurrentPowerUps()
