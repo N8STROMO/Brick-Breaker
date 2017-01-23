@@ -34,11 +34,11 @@ public class Ball : MonoBehaviour {
 
     /// <summary>
     /// Called on every frame
-    /// ToDo set the initial velocity as a component of the trajectory.
+    /// ToDo set the initial X velocity as a component of the trajectory.
     /// </summary>
     void Update()
     {
-        initalSpeedX = (initialSpeedY / (Mathf.Tan(trajectory.rotation)));
+        //initalSpeedX = 
 
         //Sets intial speed of ball if left or right arrow is pressed and game has started
         //Change gameHasStarted to true
