@@ -6,6 +6,7 @@ public class Trajectory : MonoBehaviour
 {
     public Rigidbody2D rb2d;
     public Ball ball;
+    public float thrust = 1;
 
     /// <summary>
     /// Call on first frame
@@ -28,21 +29,41 @@ public class Trajectory : MonoBehaviour
         if (movementRight)
         {
             rb2d.transform.eulerAngles = new Vector3(0, 0, -5);
+            //ToDo figure out the angle of the tranjectory 
+
+            //Set the veolicty of the ball based on the current angle of trajectory if the game has started
+            if (ball.gameHasStarted == true)
+            {
+
+            }
         }
 
         //If movement left set set new angle of trajectory to the left
         else if (movementLeft)
         {
             rb2d.transform.eulerAngles = new Vector3(0, 0, 5);
+            //ToDo figure out the angle of the tranjectory 
+
+            //Set the veolicty of the ball based on the current angle of trajectory if the game has started 
+            if (ball.gameHasStarted == true)
+            {
+
+            }
         }
 
-        //Default condition needed in nase neither arrow key is being pressed
+        //Default condition needed in nase neither key is being pressed
         else
         {
             rb2d.transform.eulerAngles = new Vector3(0, 0, 0);
-            ball.transform.eulerAngles = new Vector3(0, 0, 0);
+            //ToDo figure out the angle of the tranjectory 
+
+            //Set the veolicty of the ball based on the current angle of trajectory if the game has started 
+            if (ball.gameHasStarted == true)
+            {
+
+            }
         }
 
-        
+
     }
 }
