@@ -6,7 +6,6 @@ public class Trajectory : MonoBehaviour
 {
     public Rigidbody2D rb2d;
     public Ball ball;
-    public float thrust = 1;
 
     /// <summary>
     /// Call on first frame
