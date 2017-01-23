@@ -11,7 +11,8 @@ public class Ball : MonoBehaviour {
     public Trajectory trajectory;
     public bool gameHasStarted = false;
     public Vector2 ballMaxSpeed = new Vector2();
-    public Vector2 ballInitialSpeed = new Vector2();
+    public float initalSpeedX;
+    public float initialSpeedY;
     public float velocityMultiplier;
 
     /// <summary>
@@ -37,13 +38,14 @@ public class Ball : MonoBehaviour {
     /// </summary>
     void Update()
     {
+        initalSpeedX = (initialSpeedY / (Mathf.Tan(trajectory.rotation)));
+
         //Sets intial speed of ball if left or right arrow is pressed and game has started
         //Change gameHasStarted to true
         if ((Input.GetKey(KeyCode.UpArrow)) && !gameHasStarted)
         {
             gameHasStarted = true;
-            rb2d.velocity = ballInitialSpeed;
-
+            rb2d.velocity = new Vector2(initalSpeedX, initialSpeedY);
         }
 
         //If the game has not started make the ball follow the paddle

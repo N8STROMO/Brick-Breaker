@@ -24,28 +24,23 @@ public class Trajectory : MonoBehaviour
     {
         bool movementRight = Input.GetKey(KeyCode.D);
         bool movementLeft = Input.GetKey(KeyCode.A);
-
+        rotation = gameObject.transform.rotation.eulerAngles.z;
+        
         //If movement right move new angle of trajectory to the right
         if (movementRight)
         {
             rb2d.gameObject.transform.Rotate(new Vector3(0, 0, -1), Space.World);
-           //Gives information about the degrees from center
-            rotation = gameObject.transform.rotation.eulerAngles.z;
         }
         
-
         //If movement left move new angle of trajectory to the left
         else if (movementLeft)
         {
             rb2d.gameObject.transform.Rotate(new Vector3(0, 0, 1), Space.World);
-            //Gives information about the degrees from center
-            rotation = gameObject.transform.rotation.eulerAngles.z;
         }
 
         //If the game has started, make the trajectory sprite disappear
         if (ball.gameHasStarted == true)
         {
-
             gameObject.SetActive(false);
         }
     }
