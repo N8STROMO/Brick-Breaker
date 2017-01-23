@@ -13,13 +13,18 @@ public class GameControl : MonoBehaviour
     public static int lives =3;
     private string currentScene;
 
-    //On game started, get the current scene name
+    /// <summary>
+    /// Called on first frame
+    /// Get the current scene name
+    /// </summary>
     private void Start()
     {
         currentScene = SceneManager.GetActiveScene().name; 
     }
 
-    //Method to reset paddle and ball to orginal position and speed
+    /// <summary>
+    /// Resets paddle and ball to orginal position and speed after losing a life
+    /// </summary>
     public void ResetAfterLoseLife()
     {
         ball.gameObject.transform.position = new Vector3(0, (float)-3.3, 0);
@@ -28,7 +33,9 @@ public class GameControl : MonoBehaviour
 
     }
 
-    //Method to deal with winning the game
+    /// <summary>
+    /// Checks to see if you have won the game
+    /// </summary>
     public void CheckWinCondition()
     {
         int numBricks = bricks.childCount;
@@ -52,7 +59,9 @@ public class GameControl : MonoBehaviour
         }
     }
 
-    //Method to deal with loosing lives when the ball leaves the loves bounds
+    /// <summary>
+    /// Deals with loosing lives when the ball leaves the lower bounds
+    /// </summary>
     public void LoseLife()
     {
         lives--;
@@ -64,7 +73,9 @@ public class GameControl : MonoBehaviour
         }
     }
 
-    //Method to deal with winning the game and moving to the next level
+    /// <summary>
+    /// Deals with winning the game and moving to the next level
+    /// </summary>
     void YouWin()
     {
         switch (currentScene)
@@ -81,14 +92,20 @@ public class GameControl : MonoBehaviour
         }
     }
 
-    //Method to deal with lossing; the ball and paddle disappear and loseText is displayed
+    /// <summary>
+    /// Deals with lossing; the ball and paddle disappear and loseText is displayed
+    /// </summary>
     void Youlose()
     {
         ball.gameObject.SetActive (false);
         paddle.gameObject.SetActive (false);
         loseText.gameObject.SetActive(true);
+        //bricks.gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// Adds lives 
+    /// </summary>
     public void AddLives()
     {
         lives++;

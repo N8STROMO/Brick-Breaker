@@ -7,12 +7,17 @@ public class Paddle : MonoBehaviour {
     public Rigidbody2D rb2d;
     public float speed;
 
+    /// <summary>
+    /// Call on first frame
+    /// </summary>
     private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
     }
 
-    //On every physics itteration 
+    /// <summary>
+    /// Deals with the movement of the paddle
+    /// </summary>
     void FixedUpdate()
     {
         //Created two boolean variables to determine if left or right arrow is pressed
