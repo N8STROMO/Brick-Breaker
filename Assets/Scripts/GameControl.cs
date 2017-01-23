@@ -11,8 +11,6 @@ public class GameControl : MonoBehaviour
     public Text Lives;
     public Text loseText;
     public static int lives =3;
-    public float camHeight;
-    public float camWidth;
     private string currentScene;
 
     //On game started, get the current scene name
