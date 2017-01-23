@@ -99,8 +99,8 @@ public class GameControl : MonoBehaviour
     {
         ball.gameObject.SetActive (false);
         paddle.gameObject.SetActive (false);
+        bricks.gameObject.SetActive(false);
         loseText.gameObject.SetActive(true);
-        //bricks.gameObject.SetActive(false);
     }
 
     /// <summary>
