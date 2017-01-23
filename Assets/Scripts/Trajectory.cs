@@ -42,11 +42,8 @@ public class Trajectory : MonoBehaviour
 
         if (ball.gameHasStarted == true)
         {
-<<<<<<< HEAD
+
             gameObject.SetActive(false);
-=======
-            rb2d.transform.eulerAngles = new Vector3(0, 0, 0);
->>>>>>> master
         }
     }
 }
