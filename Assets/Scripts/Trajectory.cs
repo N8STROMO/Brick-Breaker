@@ -6,6 +6,8 @@ public class Trajectory : MonoBehaviour
 {
     public Rigidbody2D rb2d;
     public Ball ball;
+    public float rotation;
+    public bool gameHasStarted = false;
 
     /// <summary>
     /// Call on first frame
@@ -17,7 +19,6 @@ public class Trajectory : MonoBehaviour
 
     /// <summary>
     /// Deals with the changing the rotation of the trajectory
-    /// ToDo figure out how to make the change in rotation of trajectory reflect to the velocity of the ball
     /// </summary>
     void FixedUpdate()
     {
@@ -27,21 +28,26 @@ public class Trajectory : MonoBehaviour
         //If movement right set set new angle of trajectory to the right
         if (movementRight)
         {
-            rb2d.transform.eulerAngles = new Vector3(0, 0, -5);
+            rb2d.gameObject.transform.Rotate(new Vector3(0, 0, -1), Space.World);
+            rotation = gameObject.transform.rotation.z;
         }
+        
 
         //If movement left set set new angle of trajectory to the left
         else if (movementLeft)
         {
-            rb2d.transform.eulerAngles = new Vector3(0, 0, 5);
+            rb2d.gameObject.transform.Rotate(new Vector3(0, 0, 1), Space.World);
+            rotation = gameObject.transform.rotation.z;
         }
 
-        //Default condition needed in nase neither arrow key is being pressed
-        else
+        if (ball.gameHasStarted == true)
         {
+<<<<<<< HEAD
+            gameObject.SetActive(false);
+=======
             rb2d.transform.eulerAngles = new Vector3(0, 0, 0);
+>>>>>>> master
         }
-
-        
     }
 }
+
