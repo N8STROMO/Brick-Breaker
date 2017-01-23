@@ -40,7 +40,6 @@ public class Trajectory : MonoBehaviour
         else
         {
             rb2d.transform.eulerAngles = new Vector3(0, 0, 0);
-            ball.transform.eulerAngles = new Vector3(0, 0, 0);
         }
 
         
