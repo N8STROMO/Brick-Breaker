@@ -6,13 +6,18 @@ public class Bricks : MonoBehaviour {
     public GameControl control;
     public int lives;
     
-
+    /// <summary>
+    /// Call on first frame
+    /// </summary>
     private void Awake()
     {
         SwitchColor();
     }
 
-    //Method to deal with collisions, ball with bricks
+    /// <summary>
+    /// Deals with collisions, ball with bricks
+    /// </summary>
+    /// <param name="collision"></param>
     public void OnCollisionEnter2D(Collision2D collision)
     {
         //If the ball collides with the brick game object; Brick looses one life; check to see if you have won.s
@@ -24,7 +29,9 @@ public class Bricks : MonoBehaviour {
         }
     }
 
-    //Method to control the brick color based on lives
+    /// <summary>
+    /// Controls the brick color based on lives
+    /// </summary>
     private void SwitchColor()
     {
         switch (lives)

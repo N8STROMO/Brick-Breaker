@@ -6,23 +6,33 @@ public class Ball : MonoBehaviour {
 
     public Rigidbody2D rb2d;
     public GameControl control;
-    public bool gameHasStarted = false;
     public Transform paddle;
     public PowerUps powerUp;
+    public bool gameHasStarted = false;
     public Vector2 ballMaxSpeed = new Vector2();
     public Vector2 ballInitialSpeed = new Vector2();
     public float velocityMultiplier;
 
-    void Start()
+    /// <summary>
+    /// Call on first frame
+    /// </summary>
+    private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
     }
 
+    /// <summary>
+    /// Deals with creating a velocity multiplier
+    /// </summary>
+    /// <param name="x"></param>
     public void SetVelocityMultiplier(float x) {
         velocityMultiplier = x;
         rb2d.velocity = rb2d.velocity * x;
     }
 
+    /// <summary>
+    /// Called on every frame
+    /// </summary>
     void Update()
     {
         //Sets intial speed of ball if left or right arrow is pressed and game has started
@@ -42,7 +52,9 @@ public class Ball : MonoBehaviour {
         }
     }
 
-    //Method to deal with unexpected glitch where ball continually moves from left to right barriers
+    /// <summary>
+    /// Deals with unexpected glitch where ball continually moves from left to right barriers
+    /// </summary>
     void FixedUpdate()
     {
         float currentXVelocity = rb2d.velocity.x;
@@ -60,7 +72,10 @@ public class Ball : MonoBehaviour {
         }
     }
 
-    //Method to deal with collisions or triggering of the lower bounds
+    /// <summary>
+    /// Deals with collisions or triggering of the lower bounds
+    /// </summary>
+    /// <param name="collision"></param>
     void OnTriggerEnter2D(Collider2D collision)
     {
         //If ball collides with lower bounds: lose life, set gameHasStarted to false
@@ -72,7 +87,10 @@ public class Ball : MonoBehaviour {
         }
     }
 
-    //Deaks with angular ball velocity and collisions; slow power up
+    /// <summary>
+    /// Deals with angular ball velocity and collisions
+    /// </summary>
+    /// <param name="collision"></param>
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Paddle"))
@@ -88,7 +106,5 @@ public class Ball : MonoBehaviour {
             //Set the new velocity
             rb2d.velocity = new Vector2(newVelocity, oldVelocity.y);
         }
-
-
     }
 }

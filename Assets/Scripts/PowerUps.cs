@@ -9,8 +9,8 @@ public class PowerUps : MonoBehaviour
     public Paddle paddle;
     public GameControl control;
     public bool powerUpActive;
-    private bool powerUpCollected;
-    public int paddleCollisions;
+    public bool powerUpCollected;
+    private int paddleCollisions;
     private PowerUpTypes currentActivePowerUp;
 
     //Enumerate the types of power ups
@@ -20,6 +20,9 @@ public class PowerUps : MonoBehaviour
         ADD_LIFE
     }
     
+    /// <summary>
+    /// Deals with seelcting power up based on random number generator and intervals for each power up
+    /// </summary>
     public void CurrentPowerUps()
     {
         float randomNumber = Random.Range(0, 120);
@@ -53,6 +56,11 @@ public class PowerUps : MonoBehaviour
         }
     }
  
+    /// <summary>
+    /// Everytime a brick is hit call CurrentPowerUps() to have a change at gaining power up
+    /// Deals with collecting the power up using the paddle and ending the power up
+    /// </summary>
+    /// <param name="collision"></param>
     public void OnCollisionEnter2D(Collision2D collision)
     {
         //If the ball collides with a brick invoke CurrentPowerUps()
@@ -61,7 +69,7 @@ public class PowerUps : MonoBehaviour
             CurrentPowerUps();
         }
 
-        //Use the paddle to collect the power up
+        //Use the paddle to collect the power up and check to see if power up should still be active
         if (collision.gameObject.CompareTag("Paddle"))
         {
             CollectPowerUp();
@@ -77,6 +85,9 @@ public class PowerUps : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Deals with collecting power ups
+    /// </summary>
     private void CollectPowerUp()
     {
         //If the power up is active and not collected change the collection status to true
@@ -100,6 +111,9 @@ public class PowerUps : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Deals with ending the power up
+    /// </summary>
     private void EndPowerUp()
     {
         //If the ball collides with the paddle 3 times set the powerUpActive to false and the powerUpCollected to false.
