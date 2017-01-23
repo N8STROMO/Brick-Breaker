@@ -6,8 +6,8 @@ public class Trajectory : MonoBehaviour
 {
     public Rigidbody2D rb2d;
     public Ball ball;
-    public Paddle paddle;
     public float rotation;
+    public bool gameHasStarted = false;
 
     /// <summary>
     /// Call on first frame
@@ -20,24 +20,30 @@ public class Trajectory : MonoBehaviour
     /// <summary>
     /// Deals with the changing the rotation of the trajectory
     /// </summary>
-    public void FixedUpdate()
+    void FixedUpdate()
     {
         bool movementRight = Input.GetKey(KeyCode.D);
         bool movementLeft = Input.GetKey(KeyCode.A);
-        rotation = gameObject.transform.rotation.z;
-      
+
         //If movement right set set new angle of trajectory to the right
         if (movementRight)
         {
-            rb2d.gameObject.transform.Rotate(new Vector3(0,0,-1) , Space.World);
-            
+            rb2d.gameObject.transform.Rotate(new Vector3(0, 0, -1), Space.World);
+            rotation = gameObject.transform.rotation.z;
         }
+        
 
         //If movement left set set new angle of trajectory to the left
         else if (movementLeft)
         {
             rb2d.gameObject.transform.Rotate(new Vector3(0, 0, 1), Space.World);
+            rotation = gameObject.transform.rotation.z;
         }
 
+        if (ball.gameHasStarted == true)
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
+
