@@ -99,8 +99,18 @@ public class GameControl : MonoBehaviour
     {
         ball.gameObject.SetActive (false);
         paddle.gameObject.SetActive (false);
+
+        int numBricks = bricks.childCount;
+        for (int i = 0; i < numBricks; i++)
+        {
+            //If there are still bricks remaining, you have not won
+            if (bricks.GetChild(i).gameObject.activeSelf)
+            {
+                bricks.gameObject.SetActive(false);
+            }
+        }
+
         loseText.gameObject.SetActive(true);
-        //bricks.gameObject.SetActive(false);
     }
 
     /// <summary>
