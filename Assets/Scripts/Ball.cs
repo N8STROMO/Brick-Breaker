@@ -42,6 +42,7 @@ public class Ball : MonoBehaviour {
         SettingDegrees();
         initialSpeedX = (initialSpeedY / (offset * (Mathf.PI / 180)));
         
+        
         //Sets intial speed of ball if left or right arrow is pressed and game has started
         //Change gameHasStarted to true
         if ((Input.GetKey(KeyCode.UpArrow)) && !gameHasStarted)

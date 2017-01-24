@@ -5,7 +5,7 @@
  * Only have one power up at a time > Fixed
  * Add Directions > Fixed
  * Remove all bricks when game ends > Fixed
- * Implement angular velocity for start of game when ball leaves paddle
+ * Implement angular velocity for start of game when ball leaves paddle > Fixed
  * Clamp the rotation of the trajectory sprite
- * Glitch where trajectory sprite doesn't always follow the paddle and ball before start
+ * Glitch where trajectory sprite doesn't always follow the paddle and ball before start > Fixed
  * ************************************************************************/

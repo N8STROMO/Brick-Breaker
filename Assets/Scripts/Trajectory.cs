@@ -6,6 +6,7 @@ public class Trajectory : MonoBehaviour
 {
     public Rigidbody2D rb2d;
     public Ball ball;
+    public Paddle paddle;
     public int rotation;
     public bool gameHasStarted = false;
 
@@ -17,6 +18,9 @@ public class Trajectory : MonoBehaviour
         rb2d.GetComponent<Rigidbody2D>();
     }
 
+    /// <summary>
+    /// Deals with the changing the rotation of the trajectory
+    /// </summary>
     /// <summary>
     /// Deals with the changing the rotation of the trajectory
     /// </summary>
@@ -43,6 +47,12 @@ public class Trajectory : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+    }
+
+    private void Update()
+    {
+        transform.position = new Vector2(paddle.transform.position.x, transform.position.y);
+
     }
 }
 
