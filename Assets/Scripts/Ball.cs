@@ -40,7 +40,7 @@ public class Ball : MonoBehaviour {
     void Update()
     {
         SettingDegrees();
-        initialSpeedX = (initialSpeedY / (offset * (Mathf.PI / 180)));
+        initialSpeedX = Mathf.Clamp(initialSpeedY / Mathf.Tan(Mathf.Deg2Rad*offset), -initialSpeedY, initialSpeedY);
         
         
         //Sets intial speed of ball if left or right arrow is pressed and game has started
@@ -117,17 +117,6 @@ public class Ball : MonoBehaviour {
 
     public void SettingDegrees()
     {
-        if (trajectory.gameObject.GetComponent<Rigidbody2D>().rotation > 0)
-        {
-            offset = -(trajectory.rotation);
-        }
-        else if(trajectory.gameObject.GetComponent<Rigidbody2D>().rotation < 0)
-        {
-            offset = -(trajectory.rotation - 360);
-        }
-        else if (trajectory.gameObject.GetComponent<Rigidbody2D>().rotation == 0)
-        {
-            offset = 0;
-        }
+       offset = trajectory.rotation - 90;
     }
 }

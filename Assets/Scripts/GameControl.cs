@@ -9,6 +9,7 @@ public class GameControl : MonoBehaviour
     public Paddle paddle;
     public Transform bricks;
     public Text Lives;
+    public Trajectory trajectory;
     public Text loseText;
     public static int lives =3;
     private string currentScene;
@@ -30,6 +31,8 @@ public class GameControl : MonoBehaviour
         ball.gameObject.transform.position = new Vector3(0, (float)-3.3, 0);
         ball.rb2d.velocity = new Vector2(0, 0);
         paddle.gameObject.transform.position = new Vector3(0, (float)-3.75, 0);
+        trajectory.gameObject.SetActive(true);
+
 
     }
 

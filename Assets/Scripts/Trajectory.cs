@@ -4,19 +4,10 @@ using UnityEngine;
 
 public class Trajectory : MonoBehaviour
 {
-    public Rigidbody2D rb2d;
     public Ball ball;
     public Paddle paddle;
     public int rotation;
     public bool gameHasStarted = false;
-
-    /// <summary>
-    /// Call on first frame
-    /// </summary>
-    private void Start()
-    {
-        rb2d.GetComponent<Rigidbody2D>();
-    }
 
     /// <summary>
     /// Deals with the changing the rotation of the trajectory
@@ -28,18 +19,18 @@ public class Trajectory : MonoBehaviour
     {
         bool movementRight = Input.GetKey(KeyCode.D);
         bool movementLeft = Input.GetKey(KeyCode.A);
-        rotation = (int)gameObject.transform.rotation.eulerAngles.z;
-        
-        //If movement right move new angle of trajectory to the right
-        if (movementRight)
+        rotation = (int)transform.rotation.eulerAngles.z;
+
+        //If movement right move new angle of trajectory to the right=
+        if (movementRight && (rotation > 316 || rotation <= 45))
         {
-            rb2d.gameObject.transform.Rotate(new Vector3(0, 0, -1), Space.World);
+            transform.Rotate(new Vector3(0, 0, -1), Space.World);
         }
-        
+
         //If movement left move new angle of trajectory to the left
-        else if (movementLeft)
+        else if (movementLeft && (rotation < 44 || rotation >= 315))
         {
-            rb2d.gameObject.transform.Rotate(new Vector3(0, 0, 1), Space.World);
+            transform.Rotate(new Vector3(0, 0, 1), Space.World);
         }
 
         //If the game has started, make the trajectory sprite disappear
@@ -52,7 +43,6 @@ public class Trajectory : MonoBehaviour
     private void Update()
     {
         transform.position = new Vector2(paddle.transform.position.x, transform.position.y);
-
     }
 }
 
