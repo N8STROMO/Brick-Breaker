@@ -11,9 +11,10 @@ public class Ball : MonoBehaviour {
     public Trajectory trajectory;
     public bool gameHasStarted = false;
     public Vector2 ballMaxSpeed = new Vector2();
-    public float initalSpeedX;
+    public float initialSpeedX;
     public float initialSpeedY;
     public float velocityMultiplier;
+    public int offset;
 
     /// <summary>
     /// Call on first frame
@@ -38,14 +39,15 @@ public class Ball : MonoBehaviour {
     /// </summary>
     void Update()
     {
-        //initalSpeedX = 
-
+        SettingDegrees();
+        initialSpeedX = (initialSpeedY / (offset * (Mathf.PI / 180)));
+        
         //Sets intial speed of ball if left or right arrow is pressed and game has started
         //Change gameHasStarted to true
         if ((Input.GetKey(KeyCode.UpArrow)) && !gameHasStarted)
         {
             gameHasStarted = true;
-            rb2d.velocity = new Vector2(initalSpeedX, initialSpeedY);
+            rb2d.velocity = new Vector2(initialSpeedX, initialSpeedY);
         }
 
         //If the game has not started make the ball follow the paddle
@@ -109,6 +111,22 @@ public class Ball : MonoBehaviour {
             float newVelocity = fractionFromCenter * oldVelocity.y;
             //Set the new velocity
             rb2d.velocity = new Vector2(newVelocity, oldVelocity.y);
+        }
+    }
+
+    public void SettingDegrees()
+    {
+        if (trajectory.gameObject.GetComponent<Rigidbody2D>().rotation > 0)
+        {
+            offset = -(trajectory.rotation);
+        }
+        else if(trajectory.gameObject.GetComponent<Rigidbody2D>().rotation < 0)
+        {
+            offset = -(trajectory.rotation - 360);
+        }
+        else if (trajectory.gameObject.GetComponent<Rigidbody2D>().rotation == 0)
+        {
+            offset = 0;
         }
     }
 }

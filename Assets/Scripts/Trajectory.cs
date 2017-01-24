@@ -6,7 +6,7 @@ public class Trajectory : MonoBehaviour
 {
     public Rigidbody2D rb2d;
     public Ball ball;
-    public float rotation;
+    public int rotation;
     public bool gameHasStarted = false;
 
     /// <summary>
@@ -24,7 +24,7 @@ public class Trajectory : MonoBehaviour
     {
         bool movementRight = Input.GetKey(KeyCode.D);
         bool movementLeft = Input.GetKey(KeyCode.A);
-        rotation = gameObject.transform.rotation.eulerAngles.z;
+        rotation = (int)gameObject.transform.rotation.eulerAngles.z;
         
         //If movement right move new angle of trajectory to the right
         if (movementRight)
