@@ -11,8 +11,8 @@ public class Ball : MonoBehaviour {
     public Trajectory trajectory;
     public bool gameHasStarted = false;
     public Vector2 ballMaxSpeed = new Vector2();
-    public float initialSpeedX;
-    public float initialSpeedY;
+    public float SpeedX;
+    public float SpeedY;
     public float velocityMultiplier;
     public int offset;
 
@@ -40,7 +40,9 @@ public class Ball : MonoBehaviour {
     void Update()
     {
         SettingDegrees();
-        initialSpeedX = Mathf.Clamp(initialSpeedY / Mathf.Tan(Mathf.Deg2Rad*offset), -initialSpeedY, initialSpeedY);
+
+        //The X velocity is a product of tanget where the offset agle where the 
+        SpeedX = Mathf.Clamp(SpeedY / Mathf.Tan(Mathf.Deg2Rad*offset), -SpeedY, SpeedY);
         
         
         //Sets intial speed of ball if left or right arrow is pressed and game has started
@@ -48,7 +50,7 @@ public class Ball : MonoBehaviour {
         if ((Input.GetKey(KeyCode.UpArrow)) && !gameHasStarted)
         {
             gameHasStarted = true;
-            rb2d.velocity = new Vector2(initialSpeedX, initialSpeedY);
+            rb2d.velocity = new Vector2(SpeedX, SpeedY);
         }
 
         //If the game has not started make the ball follow the paddle
@@ -80,7 +82,7 @@ public class Ball : MonoBehaviour {
     }
 
     /// <summary>
-    /// Deals with collisions or triggering of the lower bounds
+    /// Deals with collisions or triggering of the lower bounds; losing a life
     /// </summary>
     /// <param name="collision"></param>
     void OnTriggerEnter2D(Collider2D collision)

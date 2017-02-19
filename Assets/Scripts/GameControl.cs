@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class GameControl : MonoBehaviour
 {
-    //Holding reference to ball and paddle
     public Ball ball;
     public Paddle paddle;
     public Transform bricks;
@@ -42,7 +41,7 @@ public class GameControl : MonoBehaviour
     public void CheckWinCondition()
     {
         int numBricks = bricks.childCount;
-        bool didWin = true;
+        bool didWin = false;
 
         //Itterate through the bricks
         for(int i = 0; i < numBricks; i++)

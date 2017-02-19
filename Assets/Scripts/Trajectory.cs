@@ -12,23 +12,20 @@ public class Trajectory : MonoBehaviour
     /// <summary>
     /// Deals with the changing the rotation of the trajectory
     /// </summary>
-    /// <summary>
-    /// Deals with the changing the rotation of the trajectory
-    /// </summary>
     void FixedUpdate()
     {
         bool movementRight = Input.GetKey(KeyCode.D);
         bool movementLeft = Input.GetKey(KeyCode.A);
         rotation = (int)transform.rotation.eulerAngles.z;
 
-        //If movement right move new angle of trajectory to the right=
-        if (movementRight && (rotation > 316 || rotation <= 45))
+        //If movement right move new angle of trajectory to the right
+        if (movementRight && (rotation > 316 || rotation <= 45)) //
         {
             transform.Rotate(new Vector3(0, 0, -1), Space.World);
         }
 
         //If movement left move new angle of trajectory to the left
-        else if (movementLeft && (rotation < 44 || rotation >= 315))
+        else if (movementLeft && (rotation < 44 || rotation >= 315)) //
         {
             transform.Rotate(new Vector3(0, 0, 1), Space.World);
         }

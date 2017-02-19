@@ -20,7 +20,7 @@ public class Bricks : MonoBehaviour {
     /// <param name="collision"></param>
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        //If the ball collides with the brick game object; Brick looses one life; check to see if you have won.s
+        //If the ball collides with the brick game object; Brick looses one life; check to see if you have won
         if (collision.gameObject.CompareTag("Ball"))
         {
             lives--;
