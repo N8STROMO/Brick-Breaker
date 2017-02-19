@@ -10,7 +10,7 @@ public class Ball : MonoBehaviour {
     public PowerUps powerUp;
     public Trajectory trajectory;
     public bool gameHasStarted = false;
-    public Vector2 ballMaxSpeed = new Vector2();
+    public Vector2 ballMaxSpeed;
     public float SpeedX;
     public float SpeedY;
     public float velocityMultiplier;
@@ -42,7 +42,7 @@ public class Ball : MonoBehaviour {
         SettingDegrees();
 
         //The X velocity is a product of tanget where the offset agle where the 
-        SpeedX = Mathf.Clamp(SpeedY / Mathf.Tan(Mathf.Deg2Rad*offset), -SpeedY, SpeedY);
+        SpeedX = Mathf.Clamp(SpeedY / Mathf.Tan(Mathf.Deg2Rad*offset), -ballMaxSpeed.x, ballMaxSpeed.x);
         
         
         //Sets intial speed of ball if left or right arrow is pressed and game has started
