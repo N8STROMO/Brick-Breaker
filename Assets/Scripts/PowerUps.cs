@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PowerUps : MonoBehaviour
 {
@@ -14,7 +12,8 @@ public class PowerUps : MonoBehaviour
     private PowerUpTypes currentActivePowerUp;
 
     //Enumerate the types of power ups
-    public enum PowerUpTypes {
+    public enum PowerUpTypes
+    {
         SLOW,
         INCREASE_PADDLE,
         ADD_LIFE
