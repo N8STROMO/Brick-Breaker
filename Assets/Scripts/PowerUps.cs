@@ -10,9 +10,16 @@ public class PowerUps : MonoBehaviour
     public bool powerUpCollected;
     public int paddleCollisions;
     private PowerUpTypes currentActivePowerUp;
+    public SpriteRenderer renderer;
 
-    //Enumerate the types of power ups
-    public enum PowerUpTypes
+
+  void Start()
+  {
+    renderer = ball.gameObject.GetComponent<SpriteRenderer>();
+  }
+
+  //Enumerate the types of power ups
+  public enum PowerUpTypes
     {
         SLOW,
         INCREASE_PADDLE,
@@ -33,7 +40,7 @@ public class PowerUps : MonoBehaviour
             if (randomNumber > 0 && randomNumber < 30)
             {
                 //change the color of the ball to blue
-                ball.gameObject.GetComponent<Renderer>().material.color = Color.blue;
+                renderer.material.color = Color.blue;
                 //Set currentActivePowerUp
                 currentActivePowerUp = PowerUpTypes.SLOW;
             }
@@ -42,14 +49,14 @@ public class PowerUps : MonoBehaviour
             else if (randomNumber > 30 && randomNumber < 60)
             {
                 //change the color of the ball to yellow
-                ball.gameObject.GetComponent<Renderer>().material.color = Color.yellow;
+                renderer.material.color = Color.yellow;
                 currentActivePowerUp = PowerUpTypes.INCREASE_PADDLE;
             }
             
             //If the random number is greater than 20 and less than 30, assign the add life power up
             else if (randomNumber > 60 && randomNumber <90)
             {
-                ball.gameObject.GetComponent<Renderer>().material.color = Color.red;
+                renderer.material.color = Color.red;
                 currentActivePowerUp = PowerUpTypes.ADD_LIFE;
             }
         }
