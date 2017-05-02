@@ -2,15 +2,15 @@
 
 public class PowerUps : MonoBehaviour
 {
-    public Ball ball;
-    public Bricks brick;
-    public Paddle paddle;
-    public GameControl control;
-    public bool powerUpActive;
-    public bool powerUpCollected;
-    public int paddleCollisions;
+    private Ball ball;
+    private Bricks brick;
+    private Paddle paddle;
+    private GameControl control;
+    private bool powerUpActive;
+    private bool powerUpCollected;
+    private int paddleCollisions;
     private PowerUpTypes currentActivePowerUp;
-    public SpriteRenderer renderer;
+    private SpriteRenderer renderer;
 
 
   void Start()

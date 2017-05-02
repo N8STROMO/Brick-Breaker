@@ -4,13 +4,13 @@ using UnityEngine.SceneManagement;
 
 public class GameControl : MonoBehaviour
 {
-    public Ball ball;
-    public Paddle paddle;
-    public Transform bricks;
-    public Text Lives;
-    public Trajectory trajectory;
-    public Text loseText;
-    public static int lives =3;
+    private Ball ball;
+    private Paddle paddle;
+    private Transform bricks;
+    private Text Lives;
+    private Trajectory trajectory;
+    private Text loseText;
+    private static int lives =3;
     private string currentScene;
 
     /// <summary>
@@ -31,8 +31,6 @@ public class GameControl : MonoBehaviour
         ball.rb2d.velocity = new Vector2(0, 0);
         paddle.gameObject.transform.position = new Vector3(0, (float)-3.75, 0);
         trajectory.gameObject.SetActive(true);
-
-
     }
 
     /// <summary>

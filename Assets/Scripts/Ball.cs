@@ -3,16 +3,16 @@
 public class Ball : MonoBehaviour {
 
     public Rigidbody2D rb2d;
-    public GameControl control;
-    public Transform paddle;
-    public PowerUps powerUp;
-    public Trajectory trajectory;
     public bool gameHasStarted = false;
-    public Vector2 ballMaxSpeed;
-    public float SpeedX;
-    public float SpeedY;
-    public float velocityMultiplier;
-    public int offset;
+    private GameControl control;
+    private Transform paddle;
+    private PowerUps powerUp;
+    private Trajectory trajectory;
+    private Vector2 ballMaxSpeed;
+    private float SpeedX;
+    private float SpeedY;
+    private float velocityMultiplier;
+    private int offset;
 
     /// <summary>
     /// Call on first frame
@@ -23,10 +23,30 @@ public class Ball : MonoBehaviour {
     }
 
     /// <summary>
-    /// Deals with creating a velocity multiplier
+    /// Deals with unexpected glitch where ball continually moves from left to right barriers
     /// </summary>
-    /// <param name="x"></param>
-    public void SetVelocityMultiplier(float x) {
+    void FixedUpdate()
+    {
+      float currentXVelocity = rb2d.velocity.x;
+      float maxYSpeed = ballMaxSpeed.y * velocityMultiplier;
+      if (Mathf.Abs(rb2d.velocity.y) < maxYSpeed && gameHasStarted)
+      {
+        if (rb2d.velocity.y <= 0)
+        {
+          rb2d.velocity = new Vector2(currentXVelocity, -maxYSpeed);
+        }
+        else
+        {
+          rb2d.velocity = new Vector2(currentXVelocity, maxYSpeed);
+        }
+      }
+    }
+
+  /// <summary>
+  /// Deals with creating a velocity multiplier
+  /// </summary>
+  /// <param name="x"></param>
+  public void SetVelocityMultiplier(float x) {
         velocityMultiplier = x;
         rb2d.velocity = rb2d.velocity * x;
     }
@@ -39,7 +59,7 @@ public class Ball : MonoBehaviour {
     {
         SettingDegrees();
 
-        //The X velocity is a product of tanget where the offset agle where the 
+        //The X velocity is a product of tanget where the offset agle where the ...? 
         SpeedX = Mathf.Clamp(SpeedY / Mathf.Tan(Mathf.Deg2Rad*offset), -ballMaxSpeed.x, ballMaxSpeed.x);
         
         
@@ -56,26 +76,6 @@ public class Ball : MonoBehaviour {
         {
             transform.position = new Vector2(paddle.position.x, transform.position.y);
             rb2d.velocity = new Vector2(0, 0);
-        }
-    }
-
-    /// <summary>
-    /// Deals with unexpected glitch where ball continually moves from left to right barriers
-    /// </summary>
-    void FixedUpdate()
-    {
-        float currentXVelocity = rb2d.velocity.x;
-        float maxYSpeed = ballMaxSpeed.y * velocityMultiplier;
-        if (Mathf.Abs(rb2d.velocity.y) < maxYSpeed && gameHasStarted)
-        {
-            if (rb2d.velocity.y <= 0)
-            {
-                rb2d.velocity = new Vector2(currentXVelocity, -maxYSpeed);
-            }
-            else
-            {
-                rb2d.velocity = new Vector2(currentXVelocity, maxYSpeed);
-            }  
         }
     }
 
