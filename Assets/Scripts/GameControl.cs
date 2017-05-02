@@ -10,7 +10,7 @@ public class GameControl : MonoBehaviour
     private Text Lives;
     private Trajectory trajectory;
     private Text loseText;
-    private static int lives =3;
+    private static int lives = 3;
     private string currentScene;
 
     /// <summary>
