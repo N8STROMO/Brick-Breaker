@@ -6,8 +6,8 @@ public class Ball : MonoBehaviour {
     public bool gameHasStarted = false;
     private GameControl control;
     private Transform paddle;
-    private PowerUps powerUp;
-    private Trajectory trajectory;
+    // private PowerUps powerUp;
+    // private Trajectory trajectory;
     private Vector2 ballMaxSpeed;
     private float SpeedX;
     private float SpeedY;
@@ -57,7 +57,7 @@ public class Ball : MonoBehaviour {
     /// </summary>
     void Update()
     {
-        SettingDegrees();
+        // SettingDegrees();
 
         //The X velocity is a product of tanget where the offset agle where the ...? 
         SpeedX = Mathf.Clamp(SpeedY / Mathf.Tan(Mathf.Deg2Rad*offset), -ballMaxSpeed.x, ballMaxSpeed.x);
@@ -69,13 +69,6 @@ public class Ball : MonoBehaviour {
         {
             gameHasStarted = true;
             rb2d.velocity = new Vector2(SpeedX, SpeedY);
-        }
-
-        //If the game has not started make the ball follow the paddle
-        else if (!gameHasStarted)
-        {
-            transform.position = new Vector2(paddle.position.x, transform.position.y);
-            rb2d.velocity = new Vector2(0, 0);
         }
     }
 
@@ -115,8 +108,8 @@ public class Ball : MonoBehaviour {
         }
     }
 
-    public void SettingDegrees()
-    {
-       offset = trajectory.rotation - 90;
-    }
+    //public void SettingDegrees()
+    //{
+    //   offset = trajectory.rotation - 90;
+    //}
 }

@@ -3,7 +3,7 @@
 public class Paddle : MonoBehaviour {
 
     private Rigidbody2D rb2d;
-    private float speed;
+    public float speed;
 
     /// <summary>
     /// Call on first frame
