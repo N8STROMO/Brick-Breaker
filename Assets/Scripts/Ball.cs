@@ -10,11 +10,11 @@ public class Ball : MonoBehaviour {
     public bool gameHasStarted = false;
     private GameControl control;
     private Transform paddle;
-    // private PowerUps powerUp;
-    // private Trajectory trajectory;
+    private PowerUps powerUp;
+    private Trajectory trajectory;
     private Vector2 ballMaxSpeed;
-    private float SpeedX;
-    private float SpeedY;
+    public float SpeedX;
+    public float SpeedY;
     private float velocityMultiplier;
     private int offset;
 
@@ -112,8 +112,8 @@ public class Ball : MonoBehaviour {
         }
     }
 
-    //public void SettingDegrees()
-    //{
-    //   offset = trajectory.rotation - 90;
-    //}
+  public void SettingDegrees()
+  {
+    offset = trajectory.rotation - 90;
+  }
 }

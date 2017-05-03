@@ -8,7 +8,7 @@ public class GameControl : MonoBehaviour
     private Paddle paddle;
     private Transform bricks;
     private Text Lives;
-    // private Trajectory trajectory;
+    private Trajectory trajectory;
     private Text loseText;
     private static int lives = 3;
     private string currentScene;
@@ -19,18 +19,18 @@ public class GameControl : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        currentScene = SceneManager.GetActiveScene().name; 
-    }
+        currentScene = SceneManager.GetActiveScene().name;
+  }
 
     /// <summary>
     /// Resets paddle and ball to orginal position and speed after losing a life
     /// </summary>
     public void ResetAfterLoseLife()
     {
-        ball.gameObject.transform.position = new Vector3(0, (float)-3.3, 0);
-        ball.rb2d.velocity = new Vector2(0, 0);
-        paddle.gameObject.transform.position = new Vector3(0, (float)-3.75, 0);
-        // trajectory.gameObject.SetActive(true);
+      ball.gameObject.transform.position = new Vector3(0, (float)-3.3, 0);
+      ball.rb2d.velocity = new Vector2(0, 0);
+      paddle.gameObject.transform.position = new Vector3(0, (float)-3.75, 0);
+      trajectory.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -38,25 +38,25 @@ public class GameControl : MonoBehaviour
     /// </summary>
     public void CheckWinCondition()
     {
-        int numBricks = bricks.childCount;
-        bool didWin = false;
+      int numBricks = bricks.childCount;
+      bool didWin = false;
 
-        //Itterate through the bricks
-        for(int i = 0; i < numBricks; i++)
-        {
-           //If there are still bricks remaining, you have not won
-           if (bricks.GetChild(i).gameObject.activeSelf)
-            {
-                didWin = false;
-                break;
-            }
-        }
-        
-        //If all the bricks have been destroyed call method YouWin()
-        if (didWin)
-        {
-            YouWin();
-        }
+      //Itterate through the bricks
+      for (int i = 0; i < numBricks; i++)
+      {
+       //If there are still bricks remaining, you have not won
+       if (bricks.GetChild(i).gameObject.activeSelf)
+       {
+         didWin = false;
+         break;
+       }
+      }
+
+      //If all the bricks have been destroyed call method YouWin()
+      if (didWin)
+      {
+      YouWin();
+      }
     }
 
     /// <summary>
@@ -64,13 +64,13 @@ public class GameControl : MonoBehaviour
     /// </summary>
     public void LoseLife()
     {
-        lives--;
-        Lives.text = lives + "";
+      lives--;
+      Lives.text = lives + "";
 
-        if(lives <= 0)
-        {
-            Youlose();
-        }
+      if (lives <= 0)
+      {
+        Youlose();
+      }
     }
 
     /// <summary>
@@ -78,18 +78,18 @@ public class GameControl : MonoBehaviour
     /// </summary>
     void YouWin()
     {
-        switch (currentScene)
-        {
-            case "Level One":
-                SceneManager.LoadScene("Level Two");
-                break;
-            case "Level Two":
-                SceneManager.LoadScene("Level Three");
-                break;
-            default:
+      switch (currentScene)
+      {
+        case "Level One":
+          SceneManager.LoadScene("Level Two");
+          break;
+        case "Level Two":
+          SceneManager.LoadScene("Level Three");
+          break;
+        default:
 
-                break;
-        }
+          break;
+      }
     }
 
     /// <summary>
@@ -97,20 +97,20 @@ public class GameControl : MonoBehaviour
     /// </summary>
     void Youlose()
     {
-        ball.gameObject.SetActive (false);
-        paddle.gameObject.SetActive (false);
+      ball.gameObject.SetActive(false);
+      paddle.gameObject.SetActive(false);
 
-        int numBricks = bricks.childCount;
-        for (int i = 0; i < numBricks; i++)
+      int numBricks = bricks.childCount;
+      for (int i = 0; i < numBricks; i++)
+      {
+        //If there are still bricks remaining, you have not won
+        if (bricks.GetChild(i).gameObject.activeSelf)
         {
-            //If there are still bricks remaining, you have not won
-            if (bricks.GetChild(i).gameObject.activeSelf)
-            {
-                bricks.gameObject.SetActive(false);
-            }
+        bricks.gameObject.SetActive(false);
         }
+      }
 
-        loseText.gameObject.SetActive(true);
+      loseText.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -118,7 +118,7 @@ public class GameControl : MonoBehaviour
     /// </summary>
     public void AddLives()
     {
-        lives++;
-        Lives.text = lives + "";
+      lives++;
+      Lives.text = lives + "";
     }
 }
