@@ -121,6 +121,4 @@ public class GameControl : MonoBehaviour
         lives++;
         Lives.text = lives + "";
     }
-
-    
 }

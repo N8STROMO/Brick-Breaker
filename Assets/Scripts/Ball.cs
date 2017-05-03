@@ -1,4 +1,8 @@
 ﻿using UnityEngine;
+/* TODO
+ * Null Reference Exception SettingDegrees()
+ * 
+ * */
 
 public class Ball : MonoBehaviour {
 
