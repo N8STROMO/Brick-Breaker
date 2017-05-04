@@ -6,17 +6,17 @@
 
 public class Ball : MonoBehaviour {
 
-    public Rigidbody2D rb2d;
-    public bool gameHasStarted = false;
-    public GameManager manager;
-    public Transform paddle;
-    public PowerUps powerUp;
-    public Trajectory trajectory;
-    public Vector2 ballMaxSpeed;
-    public float SpeedX;
-    public float SpeedY;
-    public float velocityMultiplier;
-    public int offset;
+  public Rigidbody2D rb2d;
+  public bool gameHasStarted = false;
+  public GameManager manager;
+  public Transform paddle;
+  public PowerUps powerUp;
+  public Trajectory trajectory;
+  public Vector2 ballMaxSpeed;
+  public float SpeedX;
+  public float SpeedY;
+  public float velocityMultiplier;
+  public int offset;
 
     /// <summary>
     /// Call on first frame

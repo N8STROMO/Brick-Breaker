@@ -7,15 +7,16 @@
 
 public class Bricks : MonoBehaviour {
 
-  private GameManager manager;
+  public GameManager manager;
   private int lives;
     
   /// <summary>
   /// Call on first frame
+  /// SUBJECT TO CHANGE
   /// </summary>
   private void Awake()
   {
-    SwitchColor();
+    // SwitchColor();
   }
 
   /// <summary>
