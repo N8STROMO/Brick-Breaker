@@ -5,7 +5,7 @@ public class PowerUps : MonoBehaviour
   private Ball ball;
   private Bricks brick;
   private Paddle paddle;
-  private GameControl control;
+  private GameManager control;
   private bool powerUpActive;
   private bool powerUpCollected;
   private int paddleCollisions;
@@ -145,7 +145,7 @@ public class PowerUps : MonoBehaviour
           break;
         case PowerUpTypes.ADD_LIFE:
 
-          break;
+        break;
       }
     }
   }
