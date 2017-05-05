@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 /* TODO
- * Null Reference Exception SettingDegrees()
+ * Null Reference Exception SettingDegrees()...?
  * 
  * */
 
@@ -18,33 +18,33 @@ public class Ball : MonoBehaviour {
   public float velocityMultiplier;
   public int offset;
 
-    /// <summary>
-    /// Call on first frame
-    /// </summary>
-    private void Start()
-    {
-        rb2d = GetComponent<Rigidbody2D>();
-    }
+  /// <summary>
+  /// Call on first frame
+  /// </summary>
+  private void Start()
+  {
+      rb2d = GetComponent<Rigidbody2D>();
+  }
 
-    /// <summary>
-    /// Deals with unexpected glitch where ball continually moves from left to right barriers
-    /// </summary>
-    void FixedUpdate()
+  /// <summary>
+  /// Deals with unexpected glitch where ball continually moves from left to right barriers
+  /// </summary>
+  void FixedUpdate()
+  {
+    float currentXVelocity = rb2d.velocity.x;
+    float maxYSpeed = ballMaxSpeed.y * velocityMultiplier;
+    if (Mathf.Abs(rb2d.velocity.y) < maxYSpeed && gameHasStarted)
     {
-      float currentXVelocity = rb2d.velocity.x;
-      float maxYSpeed = ballMaxSpeed.y * velocityMultiplier;
-      if (Mathf.Abs(rb2d.velocity.y) < maxYSpeed && gameHasStarted)
+      if (rb2d.velocity.y <= 0)
       {
-        if (rb2d.velocity.y <= 0)
-        {
-          rb2d.velocity = new Vector2(currentXVelocity, -maxYSpeed);
-        }
-        else
-        {
-          rb2d.velocity = new Vector2(currentXVelocity, maxYSpeed);
-        }
+        rb2d.velocity = new Vector2(currentXVelocity, -maxYSpeed);
+      }
+      else
+      {
+        rb2d.velocity = new Vector2(currentXVelocity, maxYSpeed);
       }
     }
+  }
 
   /// <summary>
   /// Deals with creating a velocity multiplier
