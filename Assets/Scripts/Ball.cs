@@ -1,14 +1,11 @@
 ﻿using UnityEngine;
-/* TODO
- * Null Reference Exception SettingDegrees()...?
- * 
- * */
+using System.Collections.Generic;
 
-public class Ball : MonoBehaviour {
+public class Ball : MonoBehaviour
+{
 
   public Rigidbody2D rb2d;
   public bool gameHasStarted = false;
-  public GameManager manager;
   public Transform paddle;
   public PowerUps powerUp;
   public Trajectory trajectory;
@@ -23,7 +20,7 @@ public class Ball : MonoBehaviour {
   /// </summary>
   private void Start()
   {
-      rb2d = GetComponent<Rigidbody2D>();
+    StartCoroutine(LaunchBallAndStartGame());
   }
 
   /// <summary>
@@ -33,9 +30,9 @@ public class Ball : MonoBehaviour {
   {
     float currentXVelocity = rb2d.velocity.x;
     float maxYSpeed = ballMaxSpeed.y * velocityMultiplier;
-    if (Mathf.Abs(rb2d.velocity.y) < maxYSpeed && gameHasStarted)
+    if(Mathf.Abs(rb2d.velocity.y) < maxYSpeed && gameHasStarted)
     {
-      if (rb2d.velocity.y <= 0)
+      if(rb2d.velocity.y <= 0)
       {
         rb2d.velocity = new Vector2(currentXVelocity, -maxYSpeed);
       }
@@ -56,25 +53,46 @@ public class Ball : MonoBehaviour {
     rb2d.velocity = rb2d.velocity * x;
   }
 
-    /// <summary>
-    /// Called on every frame
-    /// ToDo set the initial X velocity as a component of the trajectory.
-    /// </summary>
+  /// <summary>
+  /// Called on every frame
+  /// ToDo set the initial X velocity as a component of the trajectory.
+  /// </summary>
   void Update()
   {
     SettingDegrees();
 
     //The X velocity is a product of tanget where the offset agle where the ...? 
-    SpeedX = Mathf.Clamp(SpeedY / Mathf.Tan(Mathf.Deg2Rad*offset), -ballMaxSpeed.x, ballMaxSpeed.x);
-        
-        
+    SpeedX = Mathf.Clamp(SpeedY / Mathf.Tan(Mathf.Deg2Rad * offset), -ballMaxSpeed.x, ballMaxSpeed.x);
+  }
+
+  private IEnumerator<float> LaunchBallAndStartGame()
+  {
+    gameHasStarted = false;
+
+    // Calculate the ball's offset from the paddle's center position.
+    BoxCollider2D paddleCollider = paddle.GetComponentInChildren<BoxCollider2D>();
+    CircleCollider2D ballCollider = GetComponentInChildren<CircleCollider2D>();
+    Vector3 offset = new Vector3(0,
+      (paddleCollider.bounds.size.y
+      + ballCollider.bounds.size.y) / 2,
+      0);
+
+    while(Input.GetKey(KeyCode.UpArrow) == false)
+    { // Track the paddle's position each frame, until up is pressed
+      transform.position = paddle.transform.position + offset;
+      yield return 0;
+    }
+
     //Sets intial speed of ball if left or right arrow is pressed and game has started
     //Change gameHasStarted to true
-    if ((Input.GetKey(KeyCode.UpArrow)) && !gameHasStarted)
-    {
-      gameHasStarted = true;
-      rb2d.velocity = new Vector2(SpeedX, SpeedY);
-    }
+    gameHasStarted = true;
+    rb2d.velocity
+      = trajectory.transform.rotation // Apply the current aim direction to the balls launch
+        * new Vector2(SpeedX, SpeedY);
+
+    // The ball starts with physics off, once launched the ball should start physics simulation again.
+    // This allows the ball to follow the paddle before launch.
+    rb2d.simulated = true;
   }
 
   /// <summary>
@@ -86,9 +104,13 @@ public class Ball : MonoBehaviour {
     //If ball collides with lower bounds: lose life, set gameHasStarted to false
     if(collision.gameObject.CompareTag("Lower Bounds"))
     {
-        manager.ResetAfterLoseLife();
-        manager.LoseLife();
-        gameHasStarted = false;
+      GameManager.instance.ResetAfterLoseLife();
+      GameManager.instance.LoseLife();
+
+      if(isActiveAndEnabled)
+      { // If game is not over yet.
+        StartCoroutine(LaunchBallAndStartGame());
+      }
     }
   }
 
@@ -98,18 +120,22 @@ public class Ball : MonoBehaviour {
   /// <param name="collision"></param>
   public void OnCollisionEnter2D(Collision2D collision)
   {
-    if (collision.gameObject.CompareTag("Paddle"))
+    if(collision.gameObject.CompareTag("Paddle"))
     {
-        //Figure out how fare right or left the ball hit the paddle
-        float offsetFromCenter = rb2d.transform.position.x - collision.transform.position.x;
-        float collisionLength = collision.gameObject.GetComponent<Collider2D>().bounds.size.x;
-        float fractionFromCenter = offsetFromCenter / (collisionLength / 2);
-        //Get the fraction from -1 (left) to 1 (top) of where the ball hit the paddle
-        Vector2 oldVelocity = rb2d.velocity;
-        //Scale x velocity to the fraction of where the ball hit the paddle by the current y velocity
-        float newVelocity = fractionFromCenter * oldVelocity.y;
-        //Set the new velocity
-        rb2d.velocity = new Vector2(newVelocity, oldVelocity.y);
+      //Figure out how fare right or left the ball hit the paddle
+      float offsetFromCenter = rb2d.transform.position.x - collision.transform.position.x;
+      float collisionLength = collision.collider.bounds.size.x;
+      float fractionFromCenter = offsetFromCenter / (collisionLength / 2);
+      //Get the fraction from -1 (left) to 1 (right) of where the ball hit the paddle
+      Vector2 oldVelocity = Vector2.Max(rb2d.velocity, new Vector2(0, 1));
+      //Scale x velocity to the fraction of where the ball hit the paddle by the current y velocity
+      // Ensure some minimum velocity
+      float newVelocity = fractionFromCenter * oldVelocity.y;
+      //Set the new velocity
+      rb2d.velocity = new Vector2(newVelocity, oldVelocity.y);
+    } else if (rb2d.velocity.sqrMagnitude < 1)
+    { // If the ball comes close to stopping - just nudge it a bit.
+      rb2d.velocity += new Vector2(0, 1);
     }
   }
 

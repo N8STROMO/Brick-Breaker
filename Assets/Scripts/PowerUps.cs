@@ -2,25 +2,39 @@
 
 public class PowerUps : MonoBehaviour
 {
-  private Ball ball;
-  private Bricks brick;
-  private Paddle paddle;
-  private GameManager control;
-  private bool powerUpActive;
-  private bool powerUpCollected;
-  private int paddleCollisions;
-  private PowerUpTypes currentActivePowerUp;
-  private SpriteRenderer renderer;
+  private PowerUpTypes currentActivePowerUp, previousPowerUp;
 
+  /// <summary>
+  /// Considers the currentActivePowerUp to determine if any power up is active.
+  /// </summary>
+  private bool powerUpActive
+  {
+    get
+    {
+      return currentActivePowerUp != PowerUpTypes.NONE || previousPowerUp != PowerUpTypes.NONE;
+    }
+  }
+  private int paddleCollisions;
+  Renderer renderer;
+  [SerializeField]
+  Ball ball;
+
+  [SerializeField]
+  Paddle paddle;
+
+  [SerializeField]
+  PowerUpArt[] artStyleList;
 
   void Start()
   {
-    renderer = ball.gameObject.GetComponent<SpriteRenderer>();
+    renderer = GetComponent<Renderer>();
+    GameManager.instance.onLifeChange += ResetPowerUps;
   }
 
   //Enumerate the types of power ups
   public enum PowerUpTypes
   {
+    NONE,
     SLOW,
     INCREASE_PADDLE,
     ADD_LIFE
@@ -33,33 +47,59 @@ public class PowerUps : MonoBehaviour
   {
     float randomNumber = Random.Range(0, 240);
 
-    if ((randomNumber > 0 && randomNumber < 240 && !powerUpCollected && !powerUpActive))
+    if (!powerUpActive)
     {
-      powerUpActive = true;
       //If that random number is greater than 0 or less than 10, assign slow power up
       if (randomNumber > 0 && randomNumber < 30)
       {
-        //change the color of the ball to blue
-        renderer.material.color = Color.blue;
-        //Set currentActivePowerUp
-        currentActivePowerUp = PowerUpTypes.SLOW;
+        SetPowerUp(PowerUpTypes.SLOW);
       }
 
       //If the random number is greater than 10 and less than 20, assign the increase paddle size power up
-      else if (randomNumber > 30 && randomNumber < 60)
+      else if (paddle.canGrow && randomNumber > 30 && randomNumber < 60)
       {
-        //change the color of the ball to yellow
-        renderer.material.color = Color.yellow;
-        currentActivePowerUp = PowerUpTypes.INCREASE_PADDLE;
+        SetPowerUp(PowerUpTypes.INCREASE_PADDLE);
       }
 
       //If the random number is greater than 20 and less than 30, assign the add life power up
       else if (randomNumber > 60 && randomNumber < 90)
       {
-        renderer.material.color = Color.red;
-        currentActivePowerUp = PowerUpTypes.ADD_LIFE;
+        SetPowerUp(PowerUpTypes.ADD_LIFE);
       }
     }
+  }
+
+  void SetPowerUp(PowerUpTypes newPowerUpType)
+  {
+    if(currentActivePowerUp == newPowerUpType)
+    {
+      return;
+    }
+
+    GetGameObjectForArtStyle(currentActivePowerUp).SetActive(false);
+    previousPowerUp = currentActivePowerUp;
+    currentActivePowerUp = newPowerUpType;
+    GetGameObjectForArtStyle(currentActivePowerUp).SetActive(true);
+  }
+
+  /// <summary>
+  /// Checks the art style list for the selected power up.
+  /// This could be improved to select from many possible art styles if desirable.
+  /// </summary>
+  GameObject GetGameObjectForArtStyle(PowerUpTypes powerUpType)
+  {
+    for(int i = 0; i < artStyleList.Length; i++)
+    {
+      PowerUpArt art = artStyleList[i];
+      if(art.powerUpType == powerUpType)
+      {
+        return art.gameObject;
+      }
+    }
+
+    // Should never happen
+    Debug.Assert(false);
+    return null; 
   }
 
   /// <summary>
@@ -80,12 +120,6 @@ public class PowerUps : MonoBehaviour
     {
       CollectPowerUp();
 
-      //If the power up is collected record the number of collisions with the paddle
-      if (powerUpCollected)
-      {
-        paddleCollisions++;
-      }
-
       //Check the condition for ending the powerup; 3 hits to the paddle
       EndPowerUp();
     }
@@ -97,10 +131,8 @@ public class PowerUps : MonoBehaviour
   private void CollectPowerUp()
   {
     //If the power up is active and not collected change the collection status to true
-    if (powerUpActive && !powerUpCollected)
+    if (powerUpActive)
     {
-      powerUpCollected = true;
-
       switch (currentActivePowerUp)
       {
         //If the power up is slow reduce velocity multiplyer by half
@@ -109,13 +141,17 @@ public class PowerUps : MonoBehaviour
           break;
         //If the power up is increase paddle increase the length of the paddle
         case PowerUpTypes.INCREASE_PADDLE:
-          paddle.transform.localScale = new Vector2(4f, .25f);
+          paddle.currentSize++;
           break;
         //If the pwoer up is add lives add an additional life to your current lives
         case PowerUpTypes.ADD_LIFE:
-          control.AddLives();
+          GameManager.instance.AddLives();
           break;
       }
+
+      //If the power up is collected record the number of collisions with the paddle
+      paddleCollisions++;
+      SetPowerUp(PowerUpTypes.NONE);
     }
   }
 
@@ -127,13 +163,8 @@ public class PowerUps : MonoBehaviour
     //If the ball collides with the paddle 3 times set the powerUpActive to false and the powerUpCollected to false.
     if (paddleCollisions > 4)
     {
-      powerUpActive = false;
-      powerUpCollected = false;
-      //Set ball to white to symbolize no power up
-      ball.gameObject.GetComponent<Renderer>().material.color = Color.white;
-      //reset paddle collisions
-      paddleCollisions = 0;
-      switch (currentActivePowerUp)
+
+      switch(previousPowerUp)
       {
         //If the power up was slow, normalize the speed and set the paddleCollisions to 0
         case PowerUpTypes.SLOW:
@@ -141,13 +172,25 @@ public class PowerUps : MonoBehaviour
           break;
         //If the power us was increase paddle, return the paddle to the original size
         case PowerUpTypes.INCREASE_PADDLE:
-          paddle.transform.localScale = new Vector2(2.5f, .25f);
+          // TODO: Cap max size.  
+          // TODO: If at max size, prevent increase powerup from spawner
+          // TODO: Looking for 3 potential sizes
+          paddle.currentSize--;
           break;
         case PowerUpTypes.ADD_LIFE:
 
-        break;
+          break;
       }
+
+      ResetPowerUps();
     }
+  }
+
+  private void ResetPowerUps()
+  {
+    SetPowerUp(PowerUpTypes.NONE);
+    previousPowerUp = PowerUpTypes.NONE;
+    paddleCollisions = 0;
   }
 }
 

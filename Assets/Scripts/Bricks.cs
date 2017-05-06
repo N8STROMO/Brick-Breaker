@@ -5,19 +5,10 @@
  * 
  * */
 
-public class Bricks : MonoBehaviour {
-
-  public GameManager manager;
+public class Bricks : MonoBehaviour
+{
+  [SerializeField]
   private int lives;
-    
-  /// <summary>
-  /// Call on first frame
-  /// SUBJECT TO CHANGE
-  /// </summary>
-  private void Awake()
-  {
-    // SwitchColor();
-  }
 
   /// <summary>
   /// Deals with collisions, ball with bricks
@@ -26,42 +17,26 @@ public class Bricks : MonoBehaviour {
   private void OnCollisionEnter2D(Collision2D collision)
   {
     //If the ball collides with the brick game object; Brick looses one life; check to see if you have won
-    if (collision.gameObject.CompareTag("Ball"))
+    if(collision.gameObject.CompareTag("Ball"))
     {
       lives--;
-      SwitchColor(); // SUBJECT TO CHANGE; SPRITE IS CHANGING NOT COLOR
-      manager.CheckWinCondition();
+      SwitchBrickArt(); // Updates the brick art, or destroys when dead
+      GameManager.instance.CheckWinCondition();
     }
   }
 
 
-/// <summary>
-/// SUBJECT TO CHANGE; SPRITE IS CHANGING NOT COLOR
-/// </summary>
-private void SwitchColor()
-{
-  switch (lives)
+  /// <summary>
+  /// Destroys the current game object and (if still alive) loads another representing the current life.
+  /// </summary>
+  private void SwitchBrickArt()
   {
-    case 5:
-      gameObject.GetComponent<Renderer>().material.color = Color.red;
-      break;
-    case 4:
-      gameObject.GetComponent<Renderer>().material.color = Color.magenta;
-      break;
-    case 3:
-      gameObject.GetComponent<Renderer>().material.color = Color.yellow;
-      break;
-    case 2:
-      gameObject.GetComponent<Renderer>().material.color = Color.blue;
-      break;
-    case 1:
-      gameObject.GetComponent<Renderer>().material.color = Color.white;
-      break;
-    case 0:
-      gameObject.SetActive(false);
-      break;
-    default:
-      break;
+    if(lives > 0)
+    {
+      GameObject brickResource = GameManager.instance.brickListByLife[lives - 1];
+      Instantiate(brickResource, transform.position, transform.rotation, transform.parent); // TODO use an object pool
+    }
+
+    Destroy(gameObject);
   }
-}
 }
