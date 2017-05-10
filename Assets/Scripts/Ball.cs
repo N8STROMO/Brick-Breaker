@@ -1,19 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+/*
+ * 
+ * */
+
 public class Ball : MonoBehaviour
 {
-
+  [Header("Game Objects")]
   public Rigidbody2D rb2d;
-  public bool gameHasStarted = false;
-  public Transform paddle;
-  public PowerUps powerUp;
-  public Trajectory trajectory;
-  public Vector2 ballMaxSpeed;
-  public float SpeedX;
+  [SerializeField]
+  private Transform paddle;
+  [SerializeField]
+  private PowerUps powerUp;
+  [SerializeField]
+  private Trajectory trajectory;
+
+  [Header("Variables")]
   public float SpeedY;
   public float velocityMultiplier;
-  public int offset;
+  public bool gameHasStarted = false;
+  [SerializeField]
+  private Vector2 ballMaxSpeed;
+  [SerializeField]
+  private float SpeedX;
+  [SerializeField]
+  private int offset;
 
   /// <summary>
   /// Call on first frame

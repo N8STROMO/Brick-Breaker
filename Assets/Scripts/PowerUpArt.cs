@@ -1,7 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
 using UnityEngine;
+
+/*
+ * 
+ * */
 
 /// <summary>
 /// Container used to define the ball's art style options.

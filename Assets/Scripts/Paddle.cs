@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+/*
+ * 
+ * */
+
 public class Paddle : MonoBehaviour
 {
   /// <summary>
@@ -11,7 +15,7 @@ public class Paddle : MonoBehaviour
   private Rigidbody2D rb2d;
   public float speed;
 
-  int _currentSize;
+  private int _currentSize;
 
   /// <summary>
   /// Manages the size of the paddle, swapping art as appropriate.

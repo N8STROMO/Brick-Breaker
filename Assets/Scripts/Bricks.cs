@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-/* TODO
- *  Not switching colors; switching sprites 
+/* 
  * 
  * */
 

@@ -3,6 +3,10 @@ using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/*
+ * 
+ * */
+
 public class GameManager : MonoBehaviour
 {
   public static GameManager instance;
@@ -11,9 +15,9 @@ public class GameManager : MonoBehaviour
   [SerializeField]
   private Ball ball;
   [SerializeField]
-  private Trajectory ballTrajectory;
-  [SerializeField]
   private Paddle paddle;
+  [SerializeField]
+  private Trajectory ballTrajectory;
 
   [Header("Bricks")]
   [SerializeField]
@@ -27,10 +31,13 @@ public class GameManager : MonoBehaviour
   [SerializeField]
   private Text loseText;
 
+  //
   public event Action onLifeChange;
 
+  //
   private int _lives = 3;
 
+  //
   public int lives
   {
     get
@@ -47,12 +54,10 @@ public class GameManager : MonoBehaviour
     }
   }
 
+  //
   private string currentScene;
 
-  /// <summary>
-  /// Called on first frame
-  /// Get the current scene name
-  /// </summary>
+  //
   private void Awake()
   {
     // Using a singleton pattern for convienence

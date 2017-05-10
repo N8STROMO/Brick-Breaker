@@ -1,11 +1,20 @@
 ﻿using UnityEngine;
 
+/*
+ * 
+ * */
+
 public class Trajectory : MonoBehaviour
 {
-  public Ball ball;
-  public Paddle paddle;
+  [Header("Game Objects")]
+  [SerializeField]
+  private Ball ball;
+  [SerializeField]
+  private Paddle paddle;
+
+  [Header("Variables")]
   public int rotation;
-  public bool gameHasStarted = false;
+  private bool gameHasStarted = false;
 
   /// <summary>
   /// Deals with the changing the rotation of the trajectory

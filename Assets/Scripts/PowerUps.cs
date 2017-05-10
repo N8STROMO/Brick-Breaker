@@ -1,8 +1,25 @@
 ﻿using UnityEngine;
 
+/*
+ * 
+ * */
+
 public class PowerUps : MonoBehaviour
 {
+  [Header("Game Objects")]
+  Renderer renderer;
+  [SerializeField]
+  Ball ball;
+  [SerializeField]
+  Paddle paddle;
+  [SerializeField]
+  PowerUpArt[] artStyleList;
+
+  //
   private PowerUpTypes currentActivePowerUp, previousPowerUp;
+ 
+  //
+  private int paddleCollisions;
 
   /// <summary>
   /// Considers the currentActivePowerUp to determine if any power up is active.
@@ -14,24 +31,19 @@ public class PowerUps : MonoBehaviour
       return currentActivePowerUp != PowerUpTypes.NONE || previousPowerUp != PowerUpTypes.NONE;
     }
   }
-  private int paddleCollisions;
-  Renderer renderer;
-  [SerializeField]
-  Ball ball;
 
-  [SerializeField]
-  Paddle paddle;
-
-  [SerializeField]
-  PowerUpArt[] artStyleList;
-
+  /// <summary>
+  /// 
+  /// </summary>
   void Start()
   {
     renderer = GetComponent<Renderer>();
     GameManager.instance.onLifeChange += ResetPowerUps;
   }
 
-  //Enumerate the types of power ups
+  /// <summary>
+  /// Enumerate the types of power ups
+  /// </summary>
   public enum PowerUpTypes
   {
     NONE,
@@ -69,6 +81,10 @@ public class PowerUps : MonoBehaviour
     }
   }
 
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <param name="newPowerUpType"></param>
   void SetPowerUp(PowerUpTypes newPowerUpType)
   {
     if(currentActivePowerUp == newPowerUpType)
@@ -186,6 +202,9 @@ public class PowerUps : MonoBehaviour
     }
   }
 
+  /// <summary>
+  /// 
+  /// </summary>
   private void ResetPowerUps()
   {
     SetPowerUp(PowerUpTypes.NONE);
