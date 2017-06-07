@@ -24,20 +24,21 @@ public class Paddle : MonoBehaviour
     }
     set
     {
-      if(currentSize > 0)
-      {
-        paddleArtBySize[currentSize - 1].SetActive(false);
-      }
-      _currentSize = value;
-      if(currentSize > paddleArtBySize.Length)
-      { // Max size supported
-        currentSize = paddleArtBySize.Length;
-      }
+      // Make sure the value stays within the bounds of the paddleArtBySize array we dont' get index out of bounds exception
+      int newValue = Mathf.Clamp(value, 0, paddleArtBySize.Length - 1);
+      int previousValue = currentSize;
+      
+      //Hide the previous paddle object we were displaying
+      paddleArtBySize[previousValue].SetActive(false);
+      
+      // Update the private current size field
+      _currentSize = newValue;
 
-      paddleArtBySize[currentSize - 1].SetActive(true);
+      // Display the new paddle object we set
+      paddleArtBySize[newValue].SetActive(true);
     }
   }
-
+ 
   /// <summary>
   /// True if we are not already at the max supported size.
   /// </summary>

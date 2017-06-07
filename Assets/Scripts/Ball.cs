@@ -77,6 +77,7 @@ public class Ball : MonoBehaviour
       + ballCollider.bounds.size.y) / 2,
       0);
 
+    // While the user 
     while(Input.GetKey(KeyCode.UpArrow) == false)
     { // Track the paddle's position each frame, until up is pressed
       transform.position = paddle.transform.position + offset;
