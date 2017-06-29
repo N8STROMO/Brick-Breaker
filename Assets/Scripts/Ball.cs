@@ -5,11 +5,11 @@ public class Ball : MonoBehaviour
 {
 
   public Rigidbody2D rb2d;
-  public bool gameHasStarted = false;
   public Transform paddle;
   public PowerUps powerUp;
   public Trajectory trajectory;
   public Vector2 ballMaxSpeed;
+  public bool gameHasStarted = false;
   public float SpeedX;
   public float SpeedY;
   public float velocityMultiplier;
@@ -65,6 +65,10 @@ public class Ball : MonoBehaviour
     SpeedX = Mathf.Clamp(SpeedY / Mathf.Tan(Mathf.Deg2Rad * offset), -ballMaxSpeed.x, ballMaxSpeed.x);
   }
 
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <returns></returns>
   private IEnumerator<float> LaunchBallAndStartGame()
   {
     gameHasStarted = false;
@@ -116,7 +120,9 @@ public class Ball : MonoBehaviour
   }
 
   /// <summary>
-  /// Deals with angular ball velocity and collisions
+  /// Deals with angular ball velocity and collisions 
+  /// TODO this is where the bug with the ball movement is 
+  /// Unity physics vs custom physics engine
   /// </summary>
   /// <param name="collision"></param>
   public void OnCollisionEnter2D(Collision2D collision)

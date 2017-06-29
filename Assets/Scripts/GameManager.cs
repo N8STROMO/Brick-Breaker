@@ -7,30 +7,29 @@ public class GameManager : MonoBehaviour
 {
   public static GameManager instance;
 
-  [Header("Game Objects")]
-  [SerializeField]
+ 
   private Ball ball;
-  [SerializeField]
   private Trajectory ballTrajectory;
-  [SerializeField]
   private Paddle paddle;
 
-  [Header("Bricks")]
-  [SerializeField]
+  
   private Transform bricks;
-  [SerializeField]
+
   public GameObject[] brickListByLife;
 
-  [Header("UI")]
-  [SerializeField]
   private Text Lives;
-  [SerializeField]
   private Text loseText;
 
   public event Action onLifeChange;
 
-  private int _lives = 3;
+  private string currentScene;
 
+  [SerializeField]
+
+  private int _lives = 3;
+  /// <summary>
+  /// 
+  /// </summary>
   public int lives
   {
     get
@@ -46,8 +45,6 @@ public class GameManager : MonoBehaviour
       }
     }
   }
-
-  private string currentScene;
 
   /// <summary>
   /// Called on first frame
@@ -117,9 +114,19 @@ public class GameManager : MonoBehaviour
   }
 
   /// <summary>
-  /// Deals with winning the game and moving to the next level
+  /// Adds lives 
   /// </summary>
-  void YouWin()
+  public void AddLives()
+  {
+    lives++;
+    Lives.text = lives + "";
+  }
+
+
+/// <summary>
+/// Deals with winning the game and moving to the next level
+/// </summary>
+void YouWin()
   {
     switch(currentScene)
     {
@@ -130,7 +137,6 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Level Three");
         break;
       default:
-
         break;
     }
   }
@@ -156,14 +162,5 @@ public class GameManager : MonoBehaviour
     }
 
     loseText.gameObject.SetActive(true);
-  }
-
-  /// <summary>
-  /// Adds lives 
-  /// </summary>
-  public void AddLives()
-  {
-    lives++;
-    Lives.text = lives + "";
   }
 }

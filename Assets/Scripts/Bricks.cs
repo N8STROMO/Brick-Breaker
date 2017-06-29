@@ -1,10 +1,5 @@
 ﻿using UnityEngine;
 
-/* TODO
- *  Not switching colors; switching sprites 
- * 
- * */
-
 public class Bricks : MonoBehaviour
 {
   [SerializeField]
