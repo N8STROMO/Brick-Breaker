@@ -7,12 +7,10 @@ public class GameManager : MonoBehaviour
 {
   public static GameManager instance;
 
- 
   private Ball ball;
   private Trajectory ballTrajectory;
   private Paddle paddle;
 
-  
   private Transform bricks;
 
   public GameObject[] brickListByLife;
@@ -25,8 +23,8 @@ public class GameManager : MonoBehaviour
   private string currentScene;
 
   [SerializeField]
+  private int _lives;
 
-  private int _lives = 3;
   /// <summary>
   /// 
   /// </summary>
@@ -121,7 +119,6 @@ public class GameManager : MonoBehaviour
     lives++;
     Lives.text = lives + "";
   }
-
 
 /// <summary>
 /// Deals with winning the game and moving to the next level
