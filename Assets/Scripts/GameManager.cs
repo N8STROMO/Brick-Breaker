@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+  #region Data
   public static GameManager instance;
 
   private Ball ball;
@@ -24,10 +25,9 @@ public class GameManager : MonoBehaviour
 
   [SerializeField]
   private int _lives;
+  #endregion
 
-  /// <summary>
-  /// 
-  /// </summary>
+  // Is this part of data?
   public int lives
   {
     get
@@ -44,45 +44,37 @@ public class GameManager : MonoBehaviour
     }
   }
 
-  /// <summary>
-  /// Called on first frame
-  /// Get the current scene name
-  /// </summary>
   private void Awake()
   {
-    // Using a singleton pattern for convienence
+    // Using a singleton pattern for convienence.
     instance = this;
 
     currentScene = SceneManager.GetActiveScene().name;
   }
 
-  /// <summary>
-  /// Resets paddle and ball to orginal position and speed after losing a life
-  /// </summary>
+  // Resets paddle and ball to orginal position and speed after losing a life.
   public void ResetAfterLoseLife()
   {
-    // Return the ball to it's initial position 
-    ball.gameObject.transform.position = new Vector3(0, (float)-3.3, 0);
-    // Set the ball speed to 0
+    // Return the ball to it's initial position. 
+    ball.gameObject.transform.position = new Vector3(0, -3.3f, 0);
+    // Return the paddle to it's initial position.
+    paddle.gameObject.transform.position = new Vector3(0, -3.75f, 0);
+    // Set the ball speed to 0.
     ball.rb2d.velocity = new Vector2(0, 0);
-    // Return the paddle to it's initial position
-    paddle.gameObject.transform.position = new Vector3(0, (float)-3.75, 0);
-    // Activate the trajectory sprite
+    // Activate the trajectory sprite.
     ballTrajectory.gameObject.SetActive(true);
   }
 
-  /// <summary>
-  /// Checks to see if you have won the game
-  /// </summary>
+  // Checks to see if you have won the game.
   public void CheckWinCondition()
   {
     int numBricks = bricks.childCount;
     bool didWin = false;
 
-    //Itterate through the bricks
+    // Itterate through the bricks.
     for(int i = 0; i < numBricks; i++)
     {
-      //If there are still bricks remaining, you have not won
+      // If there are still bricks remaining, you have not won.
       if(bricks.GetChild(i).gameObject.activeSelf)
       {
         didWin = false;
@@ -90,16 +82,15 @@ public class GameManager : MonoBehaviour
       }
     }
 
-    //If all the bricks have been destroyed call method YouWin()
+    // If all the bricks have been destroyed call method YouWin().
+    // Where is didWin changed to true?
     if(didWin)
     {
       YouWin();
     }
   }
 
-  /// <summary>
-  /// Deals with loosing lives when the ball leaves the lower bounds
-  /// </summary>
+  // Deals with loosing lives when the ball leaves the lower bounds.
   public void LoseLife()
   {
     lives--;
@@ -111,18 +102,13 @@ public class GameManager : MonoBehaviour
     }
   }
 
-  /// <summary>
-  /// Adds lives 
-  /// </summary>
   public void AddLives()
   {
     lives++;
     Lives.text = lives + "";
   }
 
-/// <summary>
-/// Deals with winning the game and moving to the next level
-/// </summary>
+// Deals with winning the game and moving to the next level.
 void YouWin()
   {
     switch(currentScene)
@@ -138,20 +124,19 @@ void YouWin()
     }
   }
 
-  /// <summary>
-  /// Deals with lossing; the ball and paddle disappear and loseText is displayed
-  /// </summary>
+  // Deals with lossing; the ball and paddle disappear and loseText is displayed
   void Youlose()
   {
-    // Remove the ball
+    // Remove the ball.
     ball.gameObject.SetActive(false);
-    // Remove the paddle
+    // Remove the paddle.
     paddle.gameObject.SetActive(false);
 
     int numBricks = bricks.childCount;
+
     for(int i = 0; i < numBricks; i++)
     {
-      //If there are still bricks remaining, you have not won
+      //If there are still bricks remaining, you have not won.
       if(bricks.GetChild(i).gameObject.activeSelf)
       {
         bricks.gameObject.SetActive(false);

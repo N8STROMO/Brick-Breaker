@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class Ball : MonoBehaviour
 {
-
+  #region Data
   public Rigidbody2D rb2d;
   public Transform paddle;
   public PowerUps powerUp;
@@ -14,18 +14,13 @@ public class Ball : MonoBehaviour
   public float SpeedY;
   public float velocityMultiplier;
   public int offset;
-
-  /// <summary>
-  /// Call on first frame
-  /// </summary>
+  #endregion
+ 
   private void Start()
   {
     StartCoroutine(LaunchBallAndStartGame());
   }
 
-  /// <summary>
-  /// Deals with unexpected glitch where ball continually moves from left to right barriers
-  /// </summary>
   void FixedUpdate()
   {
     float currentXVelocity = rb2d.velocity.x;
@@ -43,32 +38,21 @@ public class Ball : MonoBehaviour
     }
   }
 
-  /// <summary>
-  /// Deals with creating a velocity multiplier
-  /// </summary>
-  /// <param name="x"></param>
+  void Update()
+  {
+    SettingDegrees();
+
+    // The X velocity is a product of tanget where the offset agle where the ...? 
+    SpeedX = Mathf.Clamp(SpeedY / Mathf.Tan(Mathf.Deg2Rad * offset), -ballMaxSpeed.x, ballMaxSpeed.x);
+  }
+
+  // Deals with creating a velocity multiplier
   public void SetVelocityMultiplier(float x)
   {
     velocityMultiplier = x;
     rb2d.velocity = rb2d.velocity * x;
   }
 
-  /// <summary>
-  /// Called on every frame
-  /// ToDo set the initial X velocity as a component of the trajectory.
-  /// </summary>
-  void Update()
-  {
-    SettingDegrees();
-
-    //The X velocity is a product of tanget where the offset agle where the ...? 
-    SpeedX = Mathf.Clamp(SpeedY / Mathf.Tan(Mathf.Deg2Rad * offset), -ballMaxSpeed.x, ballMaxSpeed.x);
-  }
-
-  /// <summary>
-  /// 
-  /// </summary>
-  /// <returns></returns>
   private IEnumerator<float> LaunchBallAndStartGame()
   {
     gameHasStarted = false;
@@ -83,13 +67,13 @@ public class Ball : MonoBehaviour
 
     // While the user 
     while(Input.GetKey(KeyCode.UpArrow) == false)
-    { // Track the paddle's position each frame, until up is pressed
+    { // Track the paddle's position each frame, until up is pressed.
       transform.position = paddle.transform.position + offset;
       yield return 0;
     }
 
-    //Sets intial speed of ball if left or right arrow is pressed and game has started
-    //Change gameHasStarted to true
+    // Sets intial speed of ball if left or right arrow is pressed and game has started.
+    // Change gameHasStarted to true.
     gameHasStarted = true;
     rb2d.velocity
       = trajectory.transform.rotation // Apply the current aim direction to the balls launch
@@ -100,10 +84,7 @@ public class Ball : MonoBehaviour
     rb2d.simulated = true;
   }
 
-  /// <summary>
-  /// Deals with collisions or triggering of the lower bounds; losing a life
-  /// </summary>
-  /// <param name="collision"></param>
+  // Deals with collisions or triggering of the lower bounds; losing a life
   void OnTriggerEnter2D(Collider2D collision)
   {
     //If ball collides with lower bounds: lose life, set gameHasStarted to false
@@ -119,26 +100,23 @@ public class Ball : MonoBehaviour
     }
   }
 
-  /// <summary>
-  /// Deals with angular ball velocity and collisions 
-  /// TODO this is where the bug with the ball movement is 
-  /// Unity physics vs custom physics engine
-  /// </summary>
-  /// <param name="collision"></param>
+  // Deals with angular ball velocity and collisions 
+  // TODO this is where the bug with the ball movement is 
+  // Unity physics vs custom physics engine
   public void OnCollisionEnter2D(Collision2D collision)
   {
     if(collision.gameObject.CompareTag("Paddle"))
     {
-      //Figure out how fare right or left the ball hit the paddle
+      // Figure out how fare right or left the ball hit the paddle.
       float offsetFromCenter = rb2d.transform.position.x - collision.transform.position.x;
       float collisionLength = collision.collider.bounds.size.x;
       float fractionFromCenter = offsetFromCenter / (collisionLength / 2);
-      //Get the fraction from -1 (left) to 1 (right) of where the ball hit the paddle
+      // Get the fraction from -1 (left) to 1 (right) of where the ball hit the paddle.
       Vector2 oldVelocity = Vector2.Max(rb2d.velocity, new Vector2(0, 1));
-      //Scale x velocity to the fraction of where the ball hit the paddle by the current y velocity
+      // Scale x velocity to the fraction of where the ball hit the paddle by the current y velocity.
       // Ensure some minimum velocity
       float newVelocity = fractionFromCenter * oldVelocity.y;
-      //Set the new velocity
+      // Set the new velocity.
       rb2d.velocity = new Vector2(newVelocity, oldVelocity.y);
     } else if (rb2d.velocity.sqrMagnitude < 1)
     { // If the ball comes close to stopping - just nudge it a bit.
