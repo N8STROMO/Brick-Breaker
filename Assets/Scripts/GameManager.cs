@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,13 +20,18 @@ public class GameManager : MonoBehaviour
   private Text Lives;
   private Text loseText;
 
-  public event Action onLifeChange;
+  private List<OnLifeChangeListener> lifeChangeListeners = new List<OnLifeChangeListener>();
 
   private string currentScene;
 
   [SerializeField]
   private int _lives;
   #endregion
+
+  public interface OnLifeChangeListener
+  {
+    void OnLifeChanged(int numLives);
+  }
 
   // Is this part of data?
   public int lives
@@ -37,9 +43,10 @@ public class GameManager : MonoBehaviour
     set
     {
       _lives = value;
-      if(onLifeChange != null)
+      int numListeners = lifeChangeListeners.Count;
+      for(int i = 0; i < numListeners; i++)
       {
-        onLifeChange.Invoke();
+        lifeChangeListeners[i].OnLifeChanged(_lives);
       }
     }
   }
@@ -69,13 +76,13 @@ public class GameManager : MonoBehaviour
   public void CheckWinCondition()
   {
     int numBricks = bricks.childCount;
-    bool didWin = false;
+    bool didWin = true;
 
     // Itterate through the bricks.
-    for(int i = 0; i < numBricks; i++)
+    for (int i = 0; i < numBricks; i++)
     {
       // If there are still bricks remaining, you have not won.
-      if(bricks.GetChild(i).gameObject.activeSelf)
+      if (bricks.GetChild(i).gameObject.activeSelf)
       {
         didWin = false;
         break;
@@ -84,7 +91,7 @@ public class GameManager : MonoBehaviour
 
     // If all the bricks have been destroyed call method YouWin().
     // Where is didWin changed to true?
-    if(didWin)
+    if (didWin)
     {
       YouWin();
     }
@@ -96,7 +103,7 @@ public class GameManager : MonoBehaviour
     lives--;
     Lives.text = lives + "";
 
-    if(lives <= 0)
+    if (lives <= 0)
     {
       Youlose();
     }
@@ -108,10 +115,10 @@ public class GameManager : MonoBehaviour
     Lives.text = lives + "";
   }
 
-// Deals with winning the game and moving to the next level.
-void YouWin()
+  // Deals with winning the game and moving to the next level.
+  void YouWin()
   {
-    switch(currentScene)
+    switch (currentScene)
     {
       case "Level One":
         SceneManager.LoadScene("Level Two");
@@ -134,15 +141,20 @@ void YouWin()
 
     int numBricks = bricks.childCount;
 
-    for(int i = 0; i < numBricks; i++)
+    for (int i = 0; i < numBricks; i++)
     {
       //If there are still bricks remaining, you have not won.
-      if(bricks.GetChild(i).gameObject.activeSelf)
+      if (bricks.GetChild(i).gameObject.activeSelf)
       {
         bricks.gameObject.SetActive(false);
       }
     }
 
     loseText.gameObject.SetActive(true);
+  }
+
+  public void AddOnLifeChangeListener(OnLifeChangeListener listener)
+  {
+    lifeChangeListeners.Add(listener);
   }
 }
